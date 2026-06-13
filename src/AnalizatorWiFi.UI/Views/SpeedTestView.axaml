@@ -1,0 +1,96 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:loc="using:AnalizatorWiFi.UI.Services"
+             x:Class="AnalizatorWiFi.UI.Views.SpeedTestView">
+
+    <ScrollViewer>
+        <StackPanel Margin="16" Spacing="16" MaxWidth="600">
+
+            <!-- Config -->
+            <Border Classes="card" Padding="16">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="{Binding [SpeedTest.ConfigSection], Source={x:Static loc:LocalizationService.Instance}}"
+                               FontWeight="SemiBold" FontSize="14"/>
+                    <Separator/>
+                    <TextBlock Text="{Binding [SpeedTest.Server], Source={x:Static loc:LocalizationService.Instance}}"/>
+                    <ComboBox ItemsSource="{Binding Servers}"
+                              SelectedItem="{Binding SelectedServer}"
+                              PlaceholderText="{Binding [SpeedTest.NoServers], Source={x:Static loc:LocalizationService.Instance}}"
+                              HorizontalAlignment="Stretch">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <TextBlock Text="{Binding Name}" FontWeight="Medium"/>
+                                    <TextBlock Foreground="{DynamicResource SystemBaseMediumColor}">
+                                        <TextBlock.Text>
+                                            <MultiBinding StringFormat="{}{0}:{1}">
+                                                <Binding Path="Address"/>
+                                                <Binding Path="Port"/>
+                                            </MultiBinding>
+                                        </TextBlock.Text>
+                                    </TextBlock>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <TextBlock Text="{Binding [SpeedTest.Duration], Source={x:Static loc:LocalizationService.Instance}}"/>
+                    <NumericUpDown Value="{Binding Duration}" Minimum="5" Maximum="120" Width="120"/>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Button Content="{Binding [SpeedTest.Run], Source={x:Static loc:LocalizationService.Instance}}"
+                                Command="{Binding RunSpeedTestCommand}"
+                                IsEnabled="{Binding !IsRunning}" Classes="accent"/>
+                        <Button Content="{Binding [SpeedTest.Ping], Source={x:Static loc:LocalizationService.Instance}}"
+                                Command="{Binding RunPingCommand}"
+                                IsEnabled="{Binding !IsRunning}"/>
+                        <ProgressBar IsVisible="{Binding IsRunning}"
+                                     IsIndeterminate="True" Width="80" Height="6"
+                                     VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <TextBlock Text="{Binding StatusMessage}"
+                               Foreground="{DynamicResource SystemBaseMediumColor}"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Speed results -->
+            <Border Classes="card" Padding="16">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="{Binding [SpeedTest.ResultsSection], Source={x:Static loc:LocalizationService.Instance}}"
+                               FontWeight="SemiBold" FontSize="14"/>
+                    <Separator/>
+                    <Grid ColumnDefinitions="140,*" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="8">
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding [SpeedTest.Download],   Source={x:Static loc:LocalizationService.Instance}}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding DownloadLabel}" FontSize="18" FontWeight="Bold"
+                                   Foreground="{DynamicResource SystemAccentColor}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding [SpeedTest.Upload],     Source={x:Static loc:LocalizationService.Instance}}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding UploadLabel}" FontSize="18" FontWeight="Bold"
+                                   Foreground="#27ae60"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding [SpeedTest.Jitter],     Source={x:Static loc:LocalizationService.Instance}}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding JitterLabel}"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="{Binding [SpeedTest.PacketLoss], Source={x:Static loc:LocalizationService.Instance}}"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding LostLabel}"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- Ping results -->
+            <Border Classes="card" Padding="16">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="{Binding [SpeedTest.PingSection], Source={x:Static loc:LocalizationService.Instance}}"
+                               FontWeight="SemiBold" FontSize="14"/>
+                    <Separator/>
+                    <Grid ColumnDefinitions="140,*" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="6">
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding [SpeedTest.PingAvg],  Source={x:Static loc:LocalizationService.Instance}}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding PingAvgLabel}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding [SpeedTest.PingMin],  Source={x:Static loc:LocalizationService.Instance}}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding PingMinLabel}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding [SpeedTest.PingMax],  Source={x:Static loc:LocalizationService.Instance}}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding PingMaxLabel}"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="{Binding [SpeedTest.PingLoss], Source={x:Static loc:LocalizationService.Instance}}"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding PingLostLabel}"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

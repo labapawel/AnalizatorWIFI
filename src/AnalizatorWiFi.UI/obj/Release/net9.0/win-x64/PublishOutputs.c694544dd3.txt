@@ -1,0 +1,10 @@
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\publish\win-x64\AnalizatorWiFi.UI.pdb
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\publish\win-x64\lang\de.json
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\publish\win-x64\lang\en.json
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\publish\win-x64\lang\pl.json
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\publish\win-x64\libHarfBuzzSharp.pdb
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\publish\win-x64\libSkiaSharp.pdb
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\publish\win-x64\AnalizatorWiFi.Core.pdb
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\publish\win-x64\AnalizatorWiFi.Platform.Windows.pdb
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\publish\win-x64\AnalizatorWiFi.Platform.Linux.pdb
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\publish\win-x64\AnalizatorWiFi.UI.exe

@@ -1,0 +1,12 @@
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Core\bin\Release\net9.0\AnalizatorWiFi.Core.deps.json
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Core\bin\Release\net9.0\AnalizatorWiFi.Core.dll
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Core\bin\Release\net9.0\AnalizatorWiFi.Core.pdb
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Core\obj\Release\net9.0\AnalizatorWiFi.Core.csproj.AssemblyReference.cache
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Core\obj\Release\net9.0\AnalizatorWiFi.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Core\obj\Release\net9.0\AnalizatorWiFi.Core.AssemblyInfoInputs.cache
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Core\obj\Release\net9.0\AnalizatorWiFi.Core.AssemblyInfo.cs
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Core\obj\Release\net9.0\AnalizatorWiFi.Core.csproj.CoreCompileInputs.cache
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Core\obj\Release\net9.0\AnalizatorWiFi.Core.dll
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Core\obj\Release\net9.0\refint\AnalizatorWiFi.Core.dll
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Core\obj\Release\net9.0\AnalizatorWiFi.Core.pdb
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Core\obj\Release\net9.0\ref\AnalizatorWiFi.Core.dll

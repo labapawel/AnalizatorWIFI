@@ -1,0 +1,164 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="using:AnalizatorWiFi.UI.ViewModels"
+             xmlns:loc="using:AnalizatorWiFi.UI.Services"
+             x:Class="AnalizatorWiFi.UI.Views.NetworksView">
+
+    <UserControl.DataTemplates>
+
+        <!-- Group header row -->
+        <DataTemplate DataType="{x:Type vm:NetworkGroupHeader}">
+            <Border Background="{DynamicResource SystemBaseMediumLowColor}"
+                    Padding="4,4,4,3">
+                <StackPanel Orientation="Horizontal" Spacing="6">
+                    <TextBlock Text="{Binding Ssid}"
+                               FontWeight="SemiBold" FontSize="12"
+                               VerticalAlignment="Center"/>
+                    <TextBlock FontSize="11" VerticalAlignment="Center"
+                               Foreground="{DynamicResource SystemBaseMediumColor}">
+                        <TextBlock.Text>
+                            <Binding Path="Count" StringFormat="· {0} AP"/>
+                        </TextBlock.Text>
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+        </DataTemplate>
+
+        <!-- Network row -->
+        <DataTemplate DataType="{x:Type vm:WifiNetworkViewModel}">
+            <Grid Margin="0,1" ClipToBounds="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="185"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="240"/>
+                    <ColumnDefinition Width="55"/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="75"/>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="85"/>
+                    <ColumnDefinition Width="75"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="140"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0"  Text="{Binding Ssid}"             FontSize="12" TextTrimming="CharacterEllipsis"/>
+                <TextBlock Grid.Column="1"  Text="{Binding SignalDbm}"         FontSize="12"/>
+                <Border Grid.Column="2" Margin="4,0" Height="8"
+                        VerticalAlignment="Center" ClipToBounds="True">
+                    <ProgressBar Value="{Binding SignalPercent}" Maximum="100"
+                                 Height="8" MinWidth="0" Margin="0"/>
+                </Border>
+                <TextBlock Grid.Column="3"  Text="{Binding Channel}"           FontSize="12"/>
+                <TextBlock Grid.Column="4"  Text="{Binding FrequencyGhz}"      FontSize="12"/>
+                <TextBlock Grid.Column="5"  Text="{Binding BandLabel}"         FontSize="12"/>
+                <TextBlock Grid.Column="6"  Text="{Binding ChannelWidthLabel}" FontSize="12"/>
+                <TextBlock Grid.Column="7"  Text="{Binding StandardLabel}"     FontSize="12"/>
+                <TextBlock Grid.Column="8"  Text="{Binding SecurityLabel}"     FontSize="12"/>
+                <TextBlock Grid.Column="9"  Text="{Binding DistanceLabel}"     FontSize="12"/>
+                <TextBlock Grid.Column="10" Text="{Binding Vendor}"            FontSize="12" TextTrimming="CharacterEllipsis"/>
+                <TextBlock Grid.Column="11" Text="{Binding Bssid}"             FontSize="12"/>
+                <Button    Grid.Column="12"
+                           Content="{Binding [Networks.Connect], Source={x:Static loc:LocalizationService.Instance}}"
+                           FontSize="11" Padding="6,2" Height="22"
+                           VerticalAlignment="Center"
+                           Click="OnConnectClick"/>
+            </Grid>
+        </DataTemplate>
+
+    </UserControl.DataTemplates>
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto">
+
+        <!-- Toolbar -->
+        <Border Grid.Row="0" Padding="8,6" BorderThickness="0,0,0,1"
+                BorderBrush="{DynamicResource SystemBaseMediumLowColor}">
+            <DockPanel>
+                <StackPanel DockPanel.Dock="Left" Orientation="Horizontal" Spacing="8">
+                    <Button Content="{Binding [Networks.Scan], Source={x:Static loc:LocalizationService.Instance}}"
+                            Command="{Binding ScanCommand}"
+                            IsEnabled="{Binding !IsScanning}"
+                            Classes="accent"/>
+                    <Button Content="{Binding [Networks.Continuous], Source={x:Static loc:LocalizationService.Instance}}"
+                            Command="{Binding StartContinuousCommand}"
+                            IsEnabled="{Binding !IsScanning}"/>
+                    <Button Content="{Binding [Networks.Stop], Source={x:Static loc:LocalizationService.Instance}}"
+                            Command="{Binding StopContinuousCommand}"/>
+                    <ProgressBar IsVisible="{Binding IsScanning}"
+                                 IsIndeterminate="True" Width="80" Height="6"
+                                 VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="8">
+                    <TextBlock Text="{Binding [Networks.Band], Source={x:Static loc:LocalizationService.Instance}}"
+                               VerticalAlignment="Center"/>
+                    <ComboBox ItemsSource="{Binding BandFilters}"
+                              SelectedItem="{Binding SelectedBand}"
+                              Width="100"/>
+                </StackPanel>
+
+                <TextBlock Text="{Binding StatusMessage}"
+                           VerticalAlignment="Center" Margin="8,0"
+                           Foreground="{DynamicResource SystemBaseMediumColor}"/>
+            </DockPanel>
+        </Border>
+
+        <!-- Column headers -->
+        <Border Grid.Row="1" Background="{DynamicResource SystemBaseLowColor}"
+                Padding="4,3" BorderThickness="0,0,0,1"
+                BorderBrush="{DynamicResource SystemBaseMediumLowColor}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="185"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="240"/>
+                    <ColumnDefinition Width="55"/>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="75"/>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="85"/>
+                    <ColumnDefinition Width="75"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="140"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0"  Text="{Binding [Networks.Col.SSID],     Source={x:Static loc:LocalizationService.Instance}}" FontWeight="SemiBold" FontSize="12"/>
+                <TextBlock Grid.Column="1"  Text="{Binding [Networks.Col.dBm],      Source={x:Static loc:LocalizationService.Instance}}" FontWeight="SemiBold" FontSize="12"/>
+                <TextBlock Grid.Column="2"  Text="{Binding [Networks.Col.Signal],   Source={x:Static loc:LocalizationService.Instance}}" FontWeight="SemiBold" FontSize="12"/>
+                <TextBlock Grid.Column="3"  Text="{Binding [Networks.Col.Channel],  Source={x:Static loc:LocalizationService.Instance}}" FontWeight="SemiBold" FontSize="12"/>
+                <TextBlock Grid.Column="4"  Text="{Binding [Networks.Col.Freq],     Source={x:Static loc:LocalizationService.Instance}}" FontWeight="SemiBold" FontSize="12"/>
+                <TextBlock Grid.Column="5"  Text="{Binding [Networks.Col.Band],     Source={x:Static loc:LocalizationService.Instance}}" FontWeight="SemiBold" FontSize="12"/>
+                <TextBlock Grid.Column="6"  Text="{Binding [Networks.Col.Width],    Source={x:Static loc:LocalizationService.Instance}}" FontWeight="SemiBold" FontSize="12"/>
+                <TextBlock Grid.Column="7"  Text="{Binding [Networks.Col.Standard], Source={x:Static loc:LocalizationService.Instance}}" FontWeight="SemiBold" FontSize="12"/>
+                <TextBlock Grid.Column="8"  Text="{Binding [Networks.Col.Security], Source={x:Static loc:LocalizationService.Instance}}" FontWeight="SemiBold" FontSize="12"/>
+                <TextBlock Grid.Column="9"  Text="{Binding [Networks.Col.Distance], Source={x:Static loc:LocalizationService.Instance}}" FontWeight="SemiBold" FontSize="12"/>
+                <TextBlock Grid.Column="10" Text="{Binding [Networks.Col.Vendor],   Source={x:Static loc:LocalizationService.Instance}}" FontWeight="SemiBold" FontSize="12"/>
+                <TextBlock Grid.Column="11" Text="{Binding [Networks.Col.BSSID],    Source={x:Static loc:LocalizationService.Instance}}" FontWeight="SemiBold" FontSize="12"/>
+            </Grid>
+        </Border>
+
+        <!-- Networks list -->
+        <ListBox Grid.Row="2"
+                 ItemsSource="{Binding GroupedNetworks}"
+                 SelectedItem="{Binding SelectedGroupedItem}"
+                 Padding="0"
+                 ScrollViewer.HorizontalScrollBarVisibility="Auto">
+            <ListBox.ItemContainerTheme>
+                <ControlTheme TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                    <Setter Property="Padding" Value="4,2"/>
+                    <Setter Property="Margin"  Value="0"/>
+                </ControlTheme>
+            </ListBox.ItemContainerTheme>
+        </ListBox>
+
+        <!-- Status bar -->
+        <Border Grid.Row="3" Padding="8,4" BorderThickness="0,1,0,0"
+                BorderBrush="{DynamicResource SystemBaseMediumLowColor}">
+            <TextBlock Text="{Binding StatusMessage}"
+                       Foreground="{DynamicResource SystemBaseMediumColor}"
+                       FontSize="11"/>
+        </Border>
+
+    </Grid>
+</UserControl>

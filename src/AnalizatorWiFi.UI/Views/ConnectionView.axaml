@@ -1,0 +1,114 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:loc="using:AnalizatorWiFi.UI.Services"
+             x:Class="AnalizatorWiFi.UI.Views.ConnectionView">
+
+    <ScrollViewer>
+        <StackPanel Margin="16" Spacing="16" MaxWidth="600">
+
+            <!-- Current connection card -->
+            <Border Classes="card" Padding="16">
+                <StackPanel Spacing="8">
+                    <DockPanel>
+                        <Button DockPanel.Dock="Right"
+                                Content="{Binding [Connection.Refresh], Source={x:Static loc:LocalizationService.Instance}}"
+                                Command="{Binding RefreshCommand}"
+                                IsEnabled="{Binding !IsWorking}"/>
+                        <TextBlock Text="{Binding [Connection.ActiveSection], Source={x:Static loc:LocalizationService.Instance}}"
+                                   FontWeight="SemiBold" FontSize="14"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <Separator/>
+                    <Grid ColumnDefinitions="160,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="6">
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding [Connection.SSID],      Source={x:Static loc:LocalizationService.Instance}}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding SsidLabel}" FontWeight="Medium"/>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding [Connection.BSSID],     Source={x:Static loc:LocalizationService.Instance}}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding BssidLabel}"/>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding [Connection.Signal],    Source={x:Static loc:LocalizationService.Instance}}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding SignalLabel}"/>
+
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="{Binding [Connection.Channel],   Source={x:Static loc:LocalizationService.Instance}}"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding ChannelLabel}"/>
+
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="{Binding [Connection.Distance],  Source={x:Static loc:LocalizationService.Instance}}"/>
+                        <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding DistanceLabel}"/>
+
+                        <TextBlock Grid.Row="5" Grid.Column="0" Text="{Binding [Connection.Standard],  Source={x:Static loc:LocalizationService.Instance}}"/>
+                        <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding StandardLabel}"/>
+
+                        <TextBlock Grid.Row="6" Grid.Column="0" Text="{Binding [Connection.LinkSpeed], Source={x:Static loc:LocalizationService.Instance}}"/>
+                        <TextBlock Grid.Row="6" Grid.Column="1" Text="{Binding LinkSpeedLabel}"/>
+
+                        <TextBlock Grid.Row="7" Grid.Column="0" Text="{Binding [Connection.IP],        Source={x:Static loc:LocalizationService.Instance}}"/>
+                        <TextBlock Grid.Row="7" Grid.Column="1" Text="{Binding IpLabel}"/>
+
+                        <TextBlock Grid.Row="8" Grid.Column="0" Text="{Binding [Connection.Gateway],   Source={x:Static loc:LocalizationService.Instance}}"/>
+                        <TextBlock Grid.Row="8" Grid.Column="1" Text="{Binding GatewayLabel}"/>
+
+                        <TextBlock Grid.Row="9" Grid.Column="0" Text="{Binding [Connection.DNS],       Source={x:Static loc:LocalizationService.Instance}}"/>
+                        <TextBlock Grid.Row="9" Grid.Column="1" Text="{Binding DnsLabel}"/>
+                    </Grid>
+                    <TextBlock Text="{Binding StatusMessage}"
+                               FontSize="11"
+                               Foreground="{DynamicResource SystemBaseMediumColor}"
+                               IsVisible="{Binding StatusMessage, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Connect form -->
+            <Border Classes="card" Padding="16">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="{Binding [Connection.ConnectSection], Source={x:Static loc:LocalizationService.Instance}}"
+                               FontWeight="SemiBold" FontSize="14"/>
+                    <Separator/>
+                    <TextBlock Text="{Binding [Connection.TargetSSID], Source={x:Static loc:LocalizationService.Instance}}"/>
+                    <TextBox Text="{Binding TargetSsid}"
+                             PlaceholderText="{Binding [Connection.TargetPlaceholder], Source={x:Static loc:LocalizationService.Instance}}"/>
+                    <TextBlock Text="{Binding [Connection.Password], Source={x:Static loc:LocalizationService.Instance}}"/>
+                    <TextBox Text="{Binding Password}" PasswordChar="*"
+                             PlaceholderText="{Binding [Connection.PasswordPlaceholder], Source={x:Static loc:LocalizationService.Instance}}"/>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Button Content="{Binding [Connection.Connect],    Source={x:Static loc:LocalizationService.Instance}}"
+                                Command="{Binding ConnectCommand}"
+                                IsEnabled="{Binding !IsWorking}" Classes="accent"/>
+                        <Button Content="{Binding [Connection.Disconnect], Source={x:Static loc:LocalizationService.Instance}}"
+                                Command="{Binding DisconnectCommand}"
+                                IsEnabled="{Binding !IsWorking}"/>
+                        <ProgressBar IsVisible="{Binding IsWorking}"
+                                     IsIndeterminate="True" Width="60" Height="6"
+                                     VerticalAlignment="Center"/>
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <!-- Ping -->
+            <Border Classes="card" Padding="16">
+                <StackPanel Spacing="8">
+                    <DockPanel>
+                        <Button DockPanel.Dock="Right"
+                                Content="{Binding [Connection.Ping], Source={x:Static loc:LocalizationService.Instance}}"
+                                Command="{Binding PingGatewayCommand}"
+                                IsEnabled="{Binding !IsWorking}"/>
+                        <TextBlock Text="{Binding [Connection.PingSection], Source={x:Static loc:LocalizationService.Instance}}"
+                                   FontWeight="SemiBold" FontSize="14"
+                                   VerticalAlignment="Center"/>
+                    </DockPanel>
+                    <Separator/>
+                    <Grid ColumnDefinitions="160,*" RowDefinitions="Auto,Auto,Auto,Auto" RowSpacing="6">
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding [Connection.PingAvg],  Source={x:Static loc:LocalizationService.Instance}}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding PingAvgLabel}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding [Connection.PingMin],  Source={x:Static loc:LocalizationService.Instance}}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding PingMinLabel}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding [Connection.PingMax],  Source={x:Static loc:LocalizationService.Instance}}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding PingMaxLabel}"/>
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="{Binding [Connection.PingLoss], Source={x:Static loc:LocalizationService.Instance}}"/>
+                        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding PingLostLabel}"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

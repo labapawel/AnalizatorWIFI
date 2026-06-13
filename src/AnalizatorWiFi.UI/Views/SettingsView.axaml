@@ -1,0 +1,174 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:loc="using:AnalizatorWiFi.UI.Services"
+             x:Class="AnalizatorWiFi.UI.Views.SettingsView">
+
+    <ScrollViewer>
+        <StackPanel Margin="16" Spacing="16" MaxWidth="600">
+
+            <!-- Appearance -->
+            <Border Classes="card" Padding="16">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="{Binding [Settings.AppearanceSection], Source={x:Static loc:LocalizationService.Instance}}"
+                               FontWeight="SemiBold" FontSize="14"/>
+                    <Separator/>
+                    <TextBlock Text="{Binding [Settings.Theme], Source={x:Static loc:LocalizationService.Instance}}"/>
+                    <ComboBox ItemsSource="{Binding Themes}"
+                              SelectedItem="{Binding Theme}"
+                              Width="160"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Language -->
+            <Border Classes="card" Padding="16">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="{Binding [Settings.LanguageSection], Source={x:Static loc:LocalizationService.Instance}}"
+                               FontWeight="SemiBold" FontSize="14"/>
+                    <Separator/>
+                    <TextBlock Text="{Binding [Settings.Language], Source={x:Static loc:LocalizationService.Instance}}"/>
+                    <ComboBox ItemsSource="{Binding AvailableLanguages}"
+                              SelectedItem="{Binding SelectedLanguage}"
+                              Width="200">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding NativeName}"/>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+            </Border>
+
+            <!-- Scanning -->
+            <Border Classes="card" Padding="16">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="{Binding [Settings.ScanSection], Source={x:Static loc:LocalizationService.Instance}}"
+                               FontWeight="SemiBold" FontSize="14"/>
+                    <Separator/>
+                    <TextBlock Text="{Binding [Settings.ScanMode], Source={x:Static loc:LocalizationService.Instance}}"/>
+                    <ComboBox ItemsSource="{Binding ScanModes}"
+                              SelectedItem="{Binding ScanMode}"
+                              Width="160"/>
+                    <TextBlock Text="{Binding [Settings.ScanInterval], Source={x:Static loc:LocalizationService.Instance}}"/>
+                    <ComboBox ItemsSource="{Binding ScanIntervals}"
+                              SelectedItem="{Binding ScanIntervalSeconds}"
+                              Width="100"/>
+                    <TextBlock Text="{Binding [Settings.Adapter], Source={x:Static loc:LocalizationService.Instance}}"/>
+                    <Grid ColumnDefinitions="*,Auto">
+                        <ComboBox Grid.Column="0" ItemsSource="{Binding Adapters}"
+                                  SelectedItem="{Binding SelectedAdapter}"
+                                  PlaceholderText="{Binding [Settings.Default], Source={x:Static loc:LocalizationService.Instance}}"/>
+                        <Button Grid.Column="1"
+                                Content="{Binding [Settings.Refresh], Source={x:Static loc:LocalizationService.Instance}}"
+                                Command="{Binding RefreshAdaptersCommand}" Margin="4,0,0,0"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <!-- iperf3 servers -->
+            <Border Classes="card" Padding="16">
+                <StackPanel Spacing="10">
+                    <TextBlock Text="{Binding [Settings.IperfSection], Source={x:Static loc:LocalizationService.Instance}}"
+                               FontWeight="SemiBold" FontSize="14"/>
+                    <Separator/>
+
+                    <!-- Server list -->
+                    <ListBox ItemsSource="{Binding IperfServers}"
+                             MaxHeight="200" Padding="0"
+                             Background="Transparent">
+                        <ListBox.ItemContainerTheme>
+                            <ControlTheme TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                                <Setter Property="Padding" Value="4,4"/>
+                            </ControlTheme>
+                        </ListBox.ItemContainerTheme>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="*,140,60,Auto">
+                                    <TextBlock Grid.Column="0" Text="{Binding Name}"
+                                               FontWeight="Medium" VerticalAlignment="Center"
+                                               TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding Address}"
+                                               VerticalAlignment="Center" Margin="8,0,4,0"
+                                               Foreground="{DynamicResource SystemBaseMediumColor}"
+                                               TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock Grid.Column="2" Text="{Binding Port, StringFormat=':{0}'}"
+                                               VerticalAlignment="Center"
+                                               Foreground="{DynamicResource SystemBaseMediumColor}"/>
+                                    <Button Grid.Column="3" Content="✕"
+                                            Padding="6,2" Margin="4,0,0,0"
+                                            Command="{Binding $parent[UserControl].DataContext.RemoveServerCommand}"
+                                            CommandParameter="{Binding}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <Separator/>
+
+                    <!-- Add server form -->
+                    <TextBlock Text="{Binding [Settings.AddServer], Source={x:Static loc:LocalizationService.Instance}}"
+                               FontSize="12" FontWeight="SemiBold"/>
+                    <Grid ColumnDefinitions="*,*,Auto,Auto" ColumnSpacing="6">
+                        <TextBox Grid.Column="0" Text="{Binding NewServerName}"
+                                 PlaceholderText="{Binding [Settings.ServerNamePlaceholder], Source={x:Static loc:LocalizationService.Instance}}"/>
+                        <TextBox Grid.Column="1" Text="{Binding NewServerAddress}"
+                                 PlaceholderText="{Binding [Settings.ServerAddressPlaceholder], Source={x:Static loc:LocalizationService.Instance}}"/>
+                        <NumericUpDown Grid.Column="2" Value="{Binding NewServerPort}"
+                                       Minimum="1" Maximum="65535" Width="120"/>
+                        <Button Grid.Column="3"
+                                Content="{Binding [Settings.Add], Source={x:Static loc:LocalizationService.Instance}}"
+                                Command="{Binding AddServerCommand}"
+                                Classes="accent"/>
+                    </Grid>
+
+                    <Separator/>
+                    <TextBlock Text="{Binding [Settings.DefaultDuration], Source={x:Static loc:LocalizationService.Instance}}"/>
+                    <ComboBox ItemsSource="{Binding DurationOptions}"
+                              SelectedItem="{Binding IperfDurationSeconds}"
+                              Width="100"/>
+                </StackPanel>
+            </Border>
+
+            <!-- History -->
+            <Border Classes="card" Padding="16">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="{Binding [Settings.HistorySection], Source={x:Static loc:LocalizationService.Instance}}"
+                               FontWeight="SemiBold" FontSize="14"/>
+                    <Separator/>
+                    <TextBlock Text="{Binding [Settings.DbPath], Source={x:Static loc:LocalizationService.Instance}}"/>
+                    <TextBox Text="{Binding HistoryFilePath}"
+                             PlaceholderText="{Binding [Settings.DbPathPlaceholder], Source={x:Static loc:LocalizationService.Instance}}"/>
+                    <TextBlock Text="{Binding [Settings.HistoryDays], Source={x:Static loc:LocalizationService.Instance}}"/>
+                    <ComboBox ItemsSource="{Binding HistoryDayOptions}"
+                              SelectedItem="{Binding MaxHistoryDays}"
+                              Width="100"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Alerts -->
+            <Border Classes="card" Padding="16">
+                <StackPanel Spacing="8">
+                    <TextBlock Text="{Binding [Settings.AlertsSection], Source={x:Static loc:LocalizationService.Instance}}"
+                               FontWeight="SemiBold" FontSize="14"/>
+                    <Separator/>
+                    <CheckBox Content="{Binding [Settings.AlertSignal], Source={x:Static loc:LocalizationService.Instance}}"
+                              IsChecked="{Binding SignalAlertEnabled}"/>
+                    <TextBlock Text="{Binding [Settings.Threshold], Source={x:Static loc:LocalizationService.Instance}}"
+                               IsEnabled="{Binding SignalAlertEnabled}"/>
+                    <NumericUpDown Value="{Binding SignalAlertThresholdDbm}"
+                                   Minimum="-100" Maximum="-30"
+                                   Width="120"
+                                   IsEnabled="{Binding SignalAlertEnabled}"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Save -->
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <Button Content="{Binding [Settings.Save], Source={x:Static loc:LocalizationService.Instance}}"
+                        Command="{Binding SaveCommand}" Classes="accent"/>
+                <TextBlock Text="{Binding StatusMessage}" VerticalAlignment="Center"
+                           Foreground="{DynamicResource SystemAccentColor}"/>
+            </StackPanel>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

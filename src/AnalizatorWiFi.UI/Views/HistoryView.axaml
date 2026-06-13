@@ -1,0 +1,35 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:AnalizatorWiFi.UI.Controls"
+             xmlns:loc="using:AnalizatorWiFi.UI.Services"
+             x:Class="AnalizatorWiFi.UI.Views.HistoryView">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Controls -->
+        <Border Grid.Row="0" Padding="8,6" BorderThickness="0,0,0,1"
+                BorderBrush="{DynamicResource SystemBaseMediumLowColor}">
+            <StackPanel Orientation="Horizontal" Spacing="12">
+                <TextBlock Text="{Binding [History.BSSID], Source={x:Static loc:LocalizationService.Instance}}"
+                           VerticalAlignment="Center"/>
+                <ComboBox ItemsSource="{Binding TrackedBssids}"
+                          SelectedItem="{Binding SelectedBssid}"
+                          Width="160"
+                          PlaceholderText="{Binding [History.BSSIDPlaceholder], Source={x:Static loc:LocalizationService.Instance}}"/>
+                <TextBlock Text="{Binding [History.Range], Source={x:Static loc:LocalizationService.Instance}}"
+                           VerticalAlignment="Center"/>
+                <ComboBox ItemsSource="{Binding RangeOptions}"
+                          SelectedItem="{Binding SelectedRange}"
+                          Width="80"/>
+                <ProgressBar IsVisible="{Binding IsLoading}"
+                             IsIndeterminate="True" Width="60" Height="6"
+                             VerticalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Chart -->
+        <controls:SignalHistoryChartControl Grid.Row="1"
+                                           Series="{Binding ChartSeries}"
+                                           Margin="8"/>
+    </Grid>
+</UserControl>

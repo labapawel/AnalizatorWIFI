@@ -1,0 +1,15 @@
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Linux\bin\Debug\net9.0\AnalizatorWiFi.Platform.Linux.deps.json
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Linux\bin\Debug\net9.0\AnalizatorWiFi.Platform.Linux.dll
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Linux\bin\Debug\net9.0\AnalizatorWiFi.Platform.Linux.pdb
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Linux\bin\Debug\net9.0\AnalizatorWiFi.Core.dll
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Linux\bin\Debug\net9.0\AnalizatorWiFi.Core.pdb
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Linux\obj\Debug\net9.0\AnalizatorWiFi.Platform.Linux.csproj.AssemblyReference.cache
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Linux\obj\Debug\net9.0\AnalizatorWiFi.Platform.Linux.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Linux\obj\Debug\net9.0\AnalizatorWiFi.Platform.Linux.AssemblyInfoInputs.cache
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Linux\obj\Debug\net9.0\AnalizatorWiFi.Platform.Linux.AssemblyInfo.cs
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Linux\obj\Debug\net9.0\AnalizatorWiFi.Platform.Linux.csproj.CoreCompileInputs.cache
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Linux\obj\Debug\net9.0\Analizat.D2739743.Up2Date
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Linux\obj\Debug\net9.0\AnalizatorWiFi.Platform.Linux.dll
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Linux\obj\Debug\net9.0\refint\AnalizatorWiFi.Platform.Linux.dll
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Linux\obj\Debug\net9.0\AnalizatorWiFi.Platform.Linux.pdb
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Linux\obj\Debug\net9.0\ref\AnalizatorWiFi.Platform.Linux.dll

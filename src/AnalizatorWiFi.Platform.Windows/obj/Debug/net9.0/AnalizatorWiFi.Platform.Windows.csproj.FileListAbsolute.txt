@@ -1,0 +1,15 @@
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Windows\bin\Debug\net9.0\AnalizatorWiFi.Platform.Windows.deps.json
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Windows\bin\Debug\net9.0\AnalizatorWiFi.Platform.Windows.dll
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Windows\bin\Debug\net9.0\AnalizatorWiFi.Platform.Windows.pdb
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Windows\bin\Debug\net9.0\AnalizatorWiFi.Core.dll
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Windows\bin\Debug\net9.0\AnalizatorWiFi.Core.pdb
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Windows\obj\Debug\net9.0\AnalizatorWiFi.Platform.Windows.csproj.AssemblyReference.cache
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Windows\obj\Debug\net9.0\AnalizatorWiFi.Platform.Windows.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Windows\obj\Debug\net9.0\AnalizatorWiFi.Platform.Windows.AssemblyInfoInputs.cache
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Windows\obj\Debug\net9.0\AnalizatorWiFi.Platform.Windows.AssemblyInfo.cs
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Windows\obj\Debug\net9.0\AnalizatorWiFi.Platform.Windows.csproj.CoreCompileInputs.cache
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Windows\obj\Debug\net9.0\Analizat.B1B447A9.Up2Date
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Windows\obj\Debug\net9.0\AnalizatorWiFi.Platform.Windows.dll
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Windows\obj\Debug\net9.0\refint\AnalizatorWiFi.Platform.Windows.dll
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Windows\obj\Debug\net9.0\AnalizatorWiFi.Platform.Windows.pdb
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Windows\obj\Debug\net9.0\ref\AnalizatorWiFi.Platform.Windows.dll

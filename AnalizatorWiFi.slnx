@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/AnalizatorWiFi.Core/AnalizatorWiFi.Core.csproj" />
+    <Project Path="src/AnalizatorWiFi.Platform.Linux/AnalizatorWiFi.Platform.Linux.csproj" />
+    <Project Path="src/AnalizatorWiFi.Platform.Windows/AnalizatorWiFi.Platform.Windows.csproj" />
+    <Project Path="src/AnalizatorWiFi.UI/AnalizatorWiFi.UI.csproj" />
+  </Folder>
+</Solution>

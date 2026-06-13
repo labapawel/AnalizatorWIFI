@@ -1,0 +1,180 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:controls="using:AnalizatorWiFi.UI.Controls"
+             xmlns:loc="using:AnalizatorWiFi.UI.Services"
+             x:Class="AnalizatorWiFi.UI.Views.AnalyzerView">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- ── Control bar ─────────────────────────────────────────────────── -->
+        <Border Grid.Row="0" Classes="card" Margin="8,8,8,0" Padding="8,6">
+            <Grid ColumnDefinitions="Auto,Auto,Auto,*,Auto,Auto">
+
+                <Button Grid.Column="0"
+                        Content="{Binding [Analyzer.Refresh], Source={x:Static loc:LocalizationService.Instance}}"
+                        Command="{Binding RefreshCommand}"
+                        IsEnabled="{Binding !IsRefreshing}"
+                        Classes="accent" Margin="0,0,6,0"/>
+
+                <ToggleButton Grid.Column="1"
+                              Content="{Binding [Analyzer.Monitoring], Source={x:Static loc:LocalizationService.Instance}}"
+                              IsChecked="{Binding IsMonitoring, Mode=OneWay}"
+                              Click="OnMonitoringToggle"
+                              ToolTip.Tip="{Binding [Analyzer.Monitoring.Tooltip], Source={x:Static loc:LocalizationService.Instance}}"/>
+
+                <ProgressBar Grid.Column="2"
+                             IsVisible="{Binding IsRefreshing}"
+                             IsIndeterminate="True"
+                             Width="60" Height="5"
+                             VerticalAlignment="Center"
+                             Margin="8,0,0,0"/>
+
+                <!-- Bandwidth readout -->
+                <StackPanel Grid.Column="3" Orientation="Horizontal" Spacing="12"
+                            VerticalAlignment="Center" Margin="12,0,0,0">
+                    <TextBlock Text="{Binding DownloadSpeedLabel}"
+                               FontFamily="Consolas,monospace" FontSize="12"
+                               Foreground="#27ae60" VerticalAlignment="Center"/>
+                    <TextBlock Text="{Binding UploadSpeedLabel}"
+                               FontFamily="Consolas,monospace" FontSize="12"
+                               Foreground="{DynamicResource SystemAccentColor}" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <TextBlock Grid.Column="5"
+                           Text="{Binding StatusMessage}"
+                           VerticalAlignment="Center"
+                           Foreground="{DynamicResource SystemBaseMediumColor}"
+                           TextTrimming="CharacterEllipsis"
+                           Margin="8,0,0,0"/>
+            </Grid>
+        </Border>
+
+        <!-- ── Sub-tabs ────────────────────────────────────────────────────── -->
+        <TabControl Grid.Row="1" Margin="8,4,8,8">
+
+            <!-- Tab 1: Port summary ───────────────────────────────────────── -->
+            <TabItem Header="{Binding [Analyzer.Tab.Summary], Source={x:Static loc:LocalizationService.Instance}}">
+                <Grid RowDefinitions="Auto,Auto,*">
+
+                    <TextBlock Grid.Row="0"
+                               Text="{Binding SummaryStats}"
+                               Margin="4,6,4,6"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource SystemAccentColor}"/>
+
+                    <Border Grid.Row="1"
+                            Background="{DynamicResource SystemBaseLowColor}"
+                            BorderThickness="0,0,0,1"
+                            BorderBrush="{DynamicResource SystemBaseMediumLowColor}"
+                            Padding="8,4">
+                        <Grid ColumnDefinitions="115,120,75,*">
+                            <TextBlock Grid.Column="0" Text="{Binding [Analyzer.Col.Port],        Source={x:Static loc:LocalizationService.Instance}}" FontSize="11" FontWeight="SemiBold"/>
+                            <TextBlock Grid.Column="1" Text="{Binding [Analyzer.Col.Service],     Source={x:Static loc:LocalizationService.Instance}}" FontSize="11" FontWeight="SemiBold"/>
+                            <TextBlock Grid.Column="2" Text="{Binding [Analyzer.Col.Connections], Source={x:Static loc:LocalizationService.Instance}}" FontSize="11" FontWeight="SemiBold"/>
+                            <TextBlock Grid.Column="3" Text="{Binding [Analyzer.Col.Countries],   Source={x:Static loc:LocalizationService.Instance}}" FontSize="11" FontWeight="SemiBold"/>
+                        </Grid>
+                    </Border>
+
+                    <ListBox Grid.Row="2"
+                             ItemsSource="{Binding PortRows}"
+                             Padding="0" Background="Transparent">
+                        <ListBox.ItemContainerTheme>
+                            <ControlTheme TargetType="ListBoxItem"
+                                          BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                                <Setter Property="Padding" Value="8,4"/>
+                                <Setter Property="Margin" Value="0"/>
+                            </ControlTheme>
+                        </ListBox.ItemContainerTheme>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="115,120,75,*">
+                                    <TextBlock Grid.Column="0" Text="{Binding PortLabel}"
+                                               FontFamily="Consolas,monospace" FontSize="12"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding ServiceName}"
+                                               Foreground="{DynamicResource SystemAccentColor}" FontSize="12"/>
+                                    <TextBlock Grid.Column="2" Text="{Binding ConnectionCount}"
+                                               FontWeight="SemiBold" FontSize="12"/>
+                                    <TextBlock Grid.Column="3" Text="{Binding Countries}"
+                                               Foreground="{DynamicResource SystemBaseMediumColor}"
+                                               TextTrimming="CharacterEllipsis" FontSize="12"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                </Grid>
+            </TabItem>
+
+            <!-- Tab 2: Connections ────────────────────────────────────────── -->
+            <TabItem Header="{Binding [Analyzer.Tab.Connections], Source={x:Static loc:LocalizationService.Instance}}">
+                <Grid RowDefinitions="Auto,Auto,*">
+
+                    <TextBox Grid.Row="0"
+                             Text="{Binding FilterText}"
+                             PlaceholderText="{Binding [Analyzer.Filter.Placeholder], Source={x:Static loc:LocalizationService.Instance}}"
+                             Margin="0,0,0,4"/>
+
+                    <Border Grid.Row="1"
+                            Background="{DynamicResource SystemBaseLowColor}"
+                            BorderThickness="0,0,0,1"
+                            BorderBrush="{DynamicResource SystemBaseMediumLowColor}"
+                            Padding="8,4">
+                        <Grid ColumnDefinitions="55,155,155,100,90,*">
+                            <TextBlock Grid.Column="0" Text="{Binding [Analyzer.Col.Proto],   Source={x:Static loc:LocalizationService.Instance}}" FontSize="11" FontWeight="SemiBold"/>
+                            <TextBlock Grid.Column="1" Text="{Binding [Analyzer.Col.Local],   Source={x:Static loc:LocalizationService.Instance}}" FontSize="11" FontWeight="SemiBold"/>
+                            <TextBlock Grid.Column="2" Text="{Binding [Analyzer.Col.Remote],  Source={x:Static loc:LocalizationService.Instance}}" FontSize="11" FontWeight="SemiBold"/>
+                            <TextBlock Grid.Column="3" Text="{Binding [Analyzer.Col.State],   Source={x:Static loc:LocalizationService.Instance}}" FontSize="11" FontWeight="SemiBold"/>
+                            <TextBlock Grid.Column="4" Text="{Binding [Analyzer.Col.Service], Source={x:Static loc:LocalizationService.Instance}}" FontSize="11" FontWeight="SemiBold"/>
+                            <TextBlock Grid.Column="5" Text="{Binding [Analyzer.Col.Country], Source={x:Static loc:LocalizationService.Instance}}" FontSize="11" FontWeight="SemiBold"/>
+                        </Grid>
+                    </Border>
+
+                    <ListBox Grid.Row="2"
+                             ItemsSource="{Binding FilteredConnections}"
+                             Padding="0" Background="Transparent">
+                        <ListBox.ItemContainerTheme>
+                            <ControlTheme TargetType="ListBoxItem"
+                                          BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                                <Setter Property="Padding" Value="8,3"/>
+                                <Setter Property="Margin" Value="0"/>
+                            </ControlTheme>
+                        </ListBox.ItemContainerTheme>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid ColumnDefinitions="55,155,155,100,90,*">
+                                    <TextBlock Grid.Column="0" Text="{Binding Protocol}"
+                                               FontFamily="Consolas,monospace" FontSize="11"/>
+                                    <TextBlock Grid.Column="1" Text="{Binding LocalEndpoint}"
+                                               FontFamily="Consolas,monospace" FontSize="11"
+                                               TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock Grid.Column="2" Text="{Binding RemoteEndpoint}"
+                                               FontFamily="Consolas,monospace" FontSize="11"
+                                               TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock Grid.Column="3" Text="{Binding State}"
+                                               FontSize="11"
+                                               Foreground="{DynamicResource SystemBaseMediumColor}"/>
+                                    <TextBlock Grid.Column="4" Text="{Binding ServiceName}"
+                                               FontSize="11"
+                                               Foreground="{DynamicResource SystemAccentColor}"/>
+                                    <StackPanel Grid.Column="5" Orientation="Horizontal" Spacing="4">
+                                        <TextBlock Text="{Binding FlagEmoji}" FontSize="13"/>
+                                        <TextBlock Text="{Binding Country}" FontSize="11"
+                                                   TextTrimming="CharacterEllipsis"/>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                </Grid>
+            </TabItem>
+
+            <!-- Tab 3: World map ──────────────────────────────────────────── -->
+            <TabItem Header="{Binding [Analyzer.Tab.WorldMap], Source={x:Static loc:LocalizationService.Instance}}">
+                <controls:WorldMapControl Points="{Binding MapPoints}" Margin="4"/>
+            </TabItem>
+
+        </TabControl>
+
+    </Grid>
+</UserControl>

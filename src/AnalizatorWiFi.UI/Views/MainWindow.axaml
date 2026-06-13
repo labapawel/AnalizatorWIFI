@@ -1,0 +1,107 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:views="using:AnalizatorWiFi.UI.Views"
+        xmlns:loc="using:AnalizatorWiFi.UI.Services"
+        x:Class="AnalizatorWiFi.UI.Views.MainWindow"
+        Icon="/Assets/app.ico"
+        Title="{Binding [App.Title], Source={x:Static loc:LocalizationService.Instance}}"
+        Width="1100" Height="700"
+        MinWidth="900" MinHeight="600">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Header bar -->
+        <Border Grid.Row="0" Background="{DynamicResource SystemAccentColor}" Padding="12,8">
+            <TextBlock Text="{Binding [App.Title], Source={x:Static loc:LocalizationService.Instance}}"
+                       FontSize="18" FontWeight="SemiBold"
+                       Foreground="White" VerticalAlignment="Center"/>
+        </Border>
+
+        <!-- Main tab control -->
+        <TabControl Grid.Row="1"
+                    SelectedIndex="{Binding SelectedTabIndex}"
+                    Margin="0,0,0,22">
+
+            <TabItem Header="{Binding [Tab.Networks], Source={x:Static loc:LocalizationService.Instance}}">
+                <views:NetworksView DataContext="{Binding Networks}"/>
+            </TabItem>
+
+            <TabItem Header="{Binding [Tab.Spectrum], Source={x:Static loc:LocalizationService.Instance}}">
+                <views:SpectrumView DataContext="{Binding Spectrum}"/>
+            </TabItem>
+
+            <TabItem Header="{Binding [Tab.Connection], Source={x:Static loc:LocalizationService.Instance}}">
+                <views:ConnectionView DataContext="{Binding Connection}"/>
+            </TabItem>
+
+            <TabItem Header="{Binding [Tab.History], Source={x:Static loc:LocalizationService.Instance}}">
+                <views:HistoryView DataContext="{Binding History}"/>
+            </TabItem>
+
+            <TabItem Header="{Binding [Tab.SpeedTest], Source={x:Static loc:LocalizationService.Instance}}">
+                <views:SpeedTestView DataContext="{Binding SpeedTest}"/>
+            </TabItem>
+
+            <TabItem Header="{Binding [Tab.Analyzer], Source={x:Static loc:LocalizationService.Instance}}">
+                <views:AnalyzerView DataContext="{Binding Analyzer}"/>
+            </TabItem>
+
+            <TabItem Header="{Binding [Tab.License], Source={x:Static loc:LocalizationService.Instance}}">
+                <ScrollViewer Margin="16">
+                    <StackPanel MaxWidth="720" Spacing="8">
+                        <TextBlock Text="{Binding [License.Title], Source={x:Static loc:LocalizationService.Instance}}"
+                                   FontSize="20" FontWeight="Bold" Margin="0,0,0,8"/>
+                        <TextBlock Text="{Binding [License.Copyright], Source={x:Static loc:LocalizationService.Instance}}"
+                                   FontSize="13" Opacity="0.7"/>
+                        <TextBlock Text="{Binding [License.Body], Source={x:Static loc:LocalizationService.Instance}}"
+                                   TextWrapping="Wrap" FontSize="13" LineHeight="22"/>
+                        <TextBlock Text="{Binding [License.Condition], Source={x:Static loc:LocalizationService.Instance}}"
+                                   TextWrapping="Wrap" FontSize="13" LineHeight="22"/>
+                        <Border Background="{DynamicResource SystemBaseLowColor}"
+                                CornerRadius="6" Padding="16,12" Margin="0,8,0,0">
+                            <TextBlock Text="{Binding [License.Disclaimer], Source={x:Static loc:LocalizationService.Instance}}"
+                                       TextWrapping="Wrap" FontSize="13" LineHeight="22"
+                                       FontWeight="SemiBold"/>
+                        </Border>
+                        <TextBlock Margin="0,24,0,0" FontSize="13" Opacity="0.6"
+                                   Text="{Binding [License.ComponentsHeading], Source={x:Static loc:LocalizationService.Instance}}"/>
+                        <StackPanel Spacing="4" Margin="0,4,0,0">
+                            <TextBlock FontSize="12" Opacity="0.7" Text="{Binding [License.Comp.Avalonia], Source={x:Static loc:LocalizationService.Instance}}"/>
+                            <TextBlock FontSize="12" Opacity="0.7" Text="{Binding [License.Comp.Toolkit], Source={x:Static loc:LocalizationService.Instance}}"/>
+                            <TextBlock FontSize="12" Opacity="0.7" Text="{Binding [License.Comp.LiveCharts], Source={x:Static loc:LocalizationService.Instance}}"/>
+                            <TextBlock FontSize="12" Opacity="0.7" Text="{Binding [License.Comp.Sqlite], Source={x:Static loc:LocalizationService.Instance}}"/>
+                            <TextBlock FontSize="12" Opacity="0.7" Text="{Binding [License.Comp.NaturalEarth], Source={x:Static loc:LocalizationService.Instance}}"/>
+                            <TextBlock FontSize="12" Opacity="0.7" Text="{Binding [License.Comp.IpApi], Source={x:Static loc:LocalizationService.Instance}}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="{Binding [Tab.Settings], Source={x:Static loc:LocalizationService.Instance}}">
+                <views:SettingsView DataContext="{Binding Settings}"/>
+            </TabItem>
+
+        </TabControl>
+        <!-- Footer -->
+        <Border Grid.Row="1" VerticalAlignment="Bottom" Height="22"
+                Background="{DynamicResource SystemBaseLowColor}"
+                BorderThickness="0,1,0,0"
+                BorderBrush="{DynamicResource SystemBaseMediumLowColor}">
+            <Button x:Name="FooterLink"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
+                    Margin="0,0,8,0"
+                    Padding="4,0"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Cursor="Hand"
+                    ToolTip.Tip="{Binding [Footer.OpenWebsite], Source={x:Static loc:LocalizationService.Instance}}">
+                <TextBlock Text="www.ebtech.pl"
+                           FontSize="11"
+                           TextDecorations="Underline"
+                           Foreground="{DynamicResource SystemAccentColor}"/>
+            </Button>
+        </Border>
+
+    </Grid>
+</Window>

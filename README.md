@@ -1,6 +1,11 @@
+
+
 # AnalizatorWiFi
 
 Wieloplatformowa aplikacja desktopowa do analizy sieci WiFi i połączeń sieciowych. Napisana w C# (.NET 9) z interfejsem Avalonia UI, działa na Windows i Linux.
+
+Licencja: MIT
+Strona: [ebtech.pl](https://www.ebtech.pl)
 
 ## Funkcje
 

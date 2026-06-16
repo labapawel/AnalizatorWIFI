@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AnalizatorWiFi.Platform.Linux")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6386d9901ce6c021f48ff6924440926031823b57")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1c9711e0b7c3a9f0563e5ff8526ece3476e8fa58")]
 [assembly: System.Reflection.AssemblyProductAttribute("AnalizatorWiFi.Platform.Linux")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AnalizatorWiFi.Platform.Linux")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

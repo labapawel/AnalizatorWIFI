@@ -42,7 +42,13 @@ public sealed partial class WindowsWifiScanner : IWifiScanner
         {
             string output = await RunNetshAsync(ct);
             var networks = ParseNetshOutput(output);
-            return new ScanResult { Networks = networks, ScannedAt = DateTimeOffset.Now, IsSuccess = true };
+            return new ScanResult
+            {
+                Networks    = networks,
+                AdapterName = _selectedAdapter,
+                ScannedAt   = DateTimeOffset.Now,
+                IsSuccess   = true
+            };
         }
         catch (Exception ex)
         {
@@ -54,11 +60,15 @@ public sealed partial class WindowsWifiScanner : IWifiScanner
     // netsh runner
     // -----------------------------------------------------------------------
 
-    private static async Task<string> RunNetshAsync(CancellationToken ct)
+    private async Task<string> RunNetshAsync(CancellationToken ct)
     {
+        string args = string.IsNullOrEmpty(_selectedAdapter)
+            ? "wlan show networks mode=bssid"
+            : $"wlan show networks interface=\"{_selectedAdapter}\" mode=bssid";
+
         using var proc = new Process
         {
-            StartInfo = new ProcessStartInfo("netsh", "wlan show networks mode=bssid")
+            StartInfo = new ProcessStartInfo("netsh", args)
             {
                 RedirectStandardOutput = true,
                 RedirectStandardError  = true,

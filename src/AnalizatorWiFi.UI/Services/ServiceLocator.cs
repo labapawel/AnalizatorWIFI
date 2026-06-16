@@ -66,6 +66,14 @@ internal static class ServiceLocator
 
         _provider = services.BuildServiceProvider();
 
+        // Apply saved adapter to scanner and connector
+        string savedAdapter = settingsService.Current.SelectedAdapter;
+        if (!string.IsNullOrEmpty(savedAdapter))
+        {
+            _provider.GetRequiredService<IWifiScanner>().SetAdapter(savedAdapter);
+            _provider.GetRequiredService<IWifiConnector>().SetAdapter(savedAdapter);
+        }
+
         // Start connection monitor
         var monitor = _provider.GetRequiredService<IConnectionMonitor>();
         await monitor.StartAsync();

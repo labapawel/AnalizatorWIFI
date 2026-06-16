@@ -8,4 +8,5 @@ public interface IWifiConnector
     Task DisconnectAsync(CancellationToken ct = default);
     Task<ConnectionInfo?> GetCurrentConnectionAsync(CancellationToken ct = default);
     Task<bool> IsConnectedAsync(CancellationToken ct = default);
+    void SetAdapter(string adapterName);
 }

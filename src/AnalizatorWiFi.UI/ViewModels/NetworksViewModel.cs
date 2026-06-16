@@ -17,6 +17,7 @@ public partial class NetworksViewModel : ViewModelBase
 
     [ObservableProperty] private ObservableCollection<WifiNetworkViewModel> _networks = [];
     public ObservableCollection<object> GroupedNetworks { get; } = [];
+    public ObservableCollection<string> Adapters { get; } = [];
 
     private object? _selectedGroupedItem;
     public object? SelectedGroupedItem
@@ -29,6 +30,7 @@ public partial class NetworksViewModel : ViewModelBase
     [ObservableProperty] private bool _isScanning;
     [ObservableProperty] private string _statusMessage = "Gotowy";
     [ObservableProperty] private string _selectedBand = "Wszystkie";
+    [ObservableProperty] private string? _selectedAdapter;
     [ObservableProperty] private bool _isContinuous;
     [ObservableProperty] private DateTimeOffset _lastScanTime;
 
@@ -41,6 +43,28 @@ public partial class NetworksViewModel : ViewModelBase
         _settings = settings;
         _connector = connector;
         _isContinuous = settings.Current.ScanMode == ScanMode.Continuous;
+        _selectedAdapter = settings.Current.SelectedAdapter;
+        _ = LoadAdaptersAsync();
+    }
+
+    private async Task LoadAdaptersAsync()
+    {
+        try
+        {
+            var list = await _scanner.GetAdaptersAsync();
+            Adapters.Clear();
+            foreach (var a in list) Adapters.Add(a);
+        }
+        catch { }
+    }
+
+    partial void OnSelectedAdapterChanged(string? value)
+    {
+        string adapter = value ?? string.Empty;
+        _scanner.SetAdapter(adapter);
+        _connector.SetAdapter(adapter);
+        _settings.Current.SelectedAdapter = adapter;
+        _ = _settings.SaveAsync();
     }
 
     public async Task<bool> ConnectToNetworkAsync(string ssid, string? password)
@@ -106,6 +130,12 @@ public partial class NetworksViewModel : ViewModelBase
     }
 
     partial void OnSelectedBandChanged(string value) => ApplyBandFilter();
+
+    [RelayCommand]
+    private async Task RefreshAdaptersAsync()
+    {
+        await LoadAdaptersAsync();
+    }
 
     private void ApplyResults(ScanResult result)
     {

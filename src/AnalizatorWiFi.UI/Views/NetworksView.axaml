@@ -90,6 +90,16 @@
                 </StackPanel>
 
                 <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="8">
+                    <TextBlock Text="{Binding [Networks.Adapter], Source={x:Static loc:LocalizationService.Instance}}"
+                               VerticalAlignment="Center"/>
+                    <ComboBox ItemsSource="{Binding Adapters}"
+                              SelectedItem="{Binding SelectedAdapter}"
+                              PlaceholderText="{Binding [Settings.Default], Source={x:Static loc:LocalizationService.Instance}}"
+                              MinWidth="130"/>
+                    <Button Content="{Binding [Settings.Refresh], Source={x:Static loc:LocalizationService.Instance}}"
+                            Command="{Binding RefreshAdaptersCommand}"
+                            Padding="6,4"/>
+                    <Separator Width="1" Margin="4,0"/>
                     <TextBlock Text="{Binding [Networks.Band], Source={x:Static loc:LocalizationService.Instance}}"
                                VerticalAlignment="Center"/>
                     <ComboBox ItemsSource="{Binding BandFilters}"

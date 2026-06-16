@@ -8,11 +8,19 @@ namespace AnalizatorWiFi.Platform.Linux;
 
 public sealed class LinuxWifiConnector : IWifiConnector
 {
+    private string _selectedAdapter = string.Empty;
+
+    public void SetAdapter(string adapterName) => _selectedAdapter = adapterName;
+
     public async Task<bool> ConnectAsync(string ssid, string? password, CancellationToken ct = default)
     {
+        string ifnamePart = string.IsNullOrEmpty(_selectedAdapter)
+            ? string.Empty
+            : $" ifname {_selectedAdapter}";
+
         string args = string.IsNullOrEmpty(password)
-            ? $"dev wifi connect \"{EscapeShell(ssid)}\""
-            : $"dev wifi connect \"{EscapeShell(ssid)}\" password \"{EscapeShell(password)}\"";
+            ? $"dev wifi connect \"{EscapeShell(ssid)}\"{ifnamePart}"
+            : $"dev wifi connect \"{EscapeShell(ssid)}\" password \"{EscapeShell(password)}\"{ifnamePart}";
 
         var (_, error, exitCode) = await ShellRunner.RunAsync("nmcli", args, ct);
         return exitCode == 0;
@@ -20,7 +28,10 @@ public sealed class LinuxWifiConnector : IWifiConnector
 
     public async Task DisconnectAsync(CancellationToken ct = default)
     {
-        var adapter = await GetWifiAdapterAsync(ct);
+        string adapter = !string.IsNullOrEmpty(_selectedAdapter)
+            ? _selectedAdapter
+            : await GetWifiAdapterAsync(ct) ?? string.Empty;
+
         if (!string.IsNullOrEmpty(adapter))
             await ShellRunner.RunAsync("nmcli", $"dev disconnect {adapter}", ct);
     }
@@ -34,7 +45,8 @@ public sealed class LinuxWifiConnector : IWifiConnector
 
         string? connectedDevice = output.Split('\n', StringSplitOptions.RemoveEmptyEntries)
             .Select(l => l.Split(':'))
-            .Where(p => p.Length >= 3 && p[1] == "wifi" && p[2] == "connected")
+            .Where(p => p.Length >= 3 && p[1] == "wifi" && p[2] == "connected" &&
+                        (string.IsNullOrEmpty(_selectedAdapter) || p[0] == _selectedAdapter))
             .Select(p => p[0])
             .FirstOrDefault();
 

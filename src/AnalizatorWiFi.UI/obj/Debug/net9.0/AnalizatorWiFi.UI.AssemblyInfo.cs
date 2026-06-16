@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AnalizatorWiFi.UI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6386d9901ce6c021f48ff6924440926031823b57")]
 [assembly: System.Reflection.AssemblyProductAttribute("AnalizatorWiFi.UI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AnalizatorWiFi.UI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -11,6 +11,7 @@ public partial class SettingsViewModel : ViewModelBase
 {
     private readonly ISettingsService _settingsService;
     private readonly IWifiScanner _scanner;
+    private readonly IWifiConnector _connector;
 
     [ObservableProperty] private AppTheme _theme;
     [ObservableProperty] private ScanMode _scanMode;
@@ -41,10 +42,11 @@ public partial class SettingsViewModel : ViewModelBase
     public IReadOnlyList<LanguageInfo> AvailableLanguages =>
         LocalizationService.Instance.Available;
 
-    public SettingsViewModel(ISettingsService settingsService, IWifiScanner scanner)
+    public SettingsViewModel(ISettingsService settingsService, IWifiScanner scanner, IWifiConnector connector)
     {
         _settingsService = settingsService;
         _scanner = scanner;
+        _connector = connector;
         LoadFromSettings();
     }
 
@@ -107,6 +109,10 @@ public partial class SettingsViewModel : ViewModelBase
         s.Language                = SelectedLanguage?.Code ?? "pl";
 
         await _settingsService.SaveAsync();
+
+        _scanner.SetAdapter(SelectedAdapter);
+        _connector.SetAdapter(SelectedAdapter);
+
         StatusMessage = L["Settings.Status.Saved"];
     }
 

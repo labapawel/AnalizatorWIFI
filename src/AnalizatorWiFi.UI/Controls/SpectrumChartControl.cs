@@ -2,19 +2,29 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Media;
 using AnalizatorWiFi.Core.Models;
+using AnalizatorWiFi.Core.Services;
 using AnalizatorWiFi.UI.ViewModels;
 
 namespace AnalizatorWiFi.UI.Controls;
 
 public class SpectrumChartControl : Control
 {
+    private const double ChartMargin = 48.0;
+
     public static readonly StyledProperty<ObservableCollection<SpectrumEntry>?> EntriesProperty =
         AvaloniaProperty.Register<SpectrumChartControl, ObservableCollection<SpectrumEntry>?>(nameof(Entries));
 
     public static readonly StyledProperty<string> BandProperty =
         AvaloniaProperty.Register<SpectrumChartControl, string>(nameof(Band), "2.4 GHz");
+
+    public static readonly StyledProperty<double> SelectedFrequencyMhzProperty =
+        AvaloniaProperty.Register<SpectrumChartControl, double>(nameof(SelectedFrequencyMhz), 0.0);
+
+    public static readonly StyledProperty<bool> ShowFrequencyProperty =
+        AvaloniaProperty.Register<SpectrumChartControl, bool>(nameof(ShowFrequency), false);
 
     public ObservableCollection<SpectrumEntry>? Entries
     {
@@ -28,9 +38,21 @@ public class SpectrumChartControl : Control
         set => SetValue(BandProperty, value);
     }
 
+    public double SelectedFrequencyMhz
+    {
+        get => GetValue(SelectedFrequencyMhzProperty);
+        set => SetValue(SelectedFrequencyMhzProperty, value);
+    }
+
+    public bool ShowFrequency
+    {
+        get => GetValue(ShowFrequencyProperty);
+        set => SetValue(ShowFrequencyProperty, value);
+    }
+
     static SpectrumChartControl()
     {
-        AffectsRender<SpectrumChartControl>(EntriesProperty, BandProperty);
+        AffectsRender<SpectrumChartControl>(EntriesProperty, BandProperty, SelectedFrequencyMhzProperty, ShowFrequencyProperty);
     }
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
@@ -61,7 +83,7 @@ public class SpectrumChartControl : Control
 
         double w = Bounds.Width;
         double h = Bounds.Height;
-        const double margin = 48;
+        const double margin = ChartMargin;
         double chartW = w - margin * 2;
         double chartH = h - margin * 2;
 
@@ -96,8 +118,54 @@ public class SpectrumChartControl : Control
             DrawLabel(context, entry.Ssid, centerX, peakY - 4);
         }
 
+        // Selected frequency marker
+        double selFreq = SelectedFrequencyMhz;
+        if (selFreq > 0)
+            DrawMarker(context, selFreq, minFreq, maxFreq, margin, chartW, chartH);
+
         // dBm scale on right
         DrawDbmScale(context, w - margin + 4, margin, chartH, dbmMin, dbmMax);
+    }
+
+    protected override void OnPointerPressed(PointerPressedEventArgs e)
+    {
+        base.OnPointerPressed(e);
+        if (!e.GetCurrentPoint(this).Properties.IsLeftButtonPressed) return;
+
+        var pos    = e.GetPosition(this);
+        double chartW = Bounds.Width  - ChartMargin * 2;
+        double chartH = Bounds.Height - ChartMargin * 2;
+
+        if (pos.X < ChartMargin || pos.X > ChartMargin + chartW ||
+            pos.Y < ChartMargin || pos.Y > ChartMargin + chartH) return;
+
+        var (minFreq, maxFreq) = GetBandRange();
+        double freq = minFreq + (pos.X - ChartMargin) / chartW * (maxFreq - minFreq);
+        SelectedFrequencyMhz = Math.Round(freq);
+        e.Handled = true;
+    }
+
+    private void DrawMarker(DrawingContext ctx, double freq, double minFreq, double maxFreq,
+        double margin, double chartW, double chartH)
+    {
+        double freqRange = maxFreq - minFreq;
+        double x = margin + (freq - minFreq) / freqRange * chartW;
+        if (x < margin - 1 || x > margin + chartW + 1) return;
+
+        var markerBrush = new SolidColorBrush(Color.Parse("#FFD700"));
+        var markerPen   = new Pen(markerBrush, 1.5, new DashStyle([5, 3], 0));
+        ctx.DrawLine(markerPen, new Point(x, margin), new Point(x, margin + chartH));
+
+        int ch = ChannelCalculator.FrequencyToChannel(freq);
+        string label = ch > 0 ? $"Ch {ch} · {freq:F0} MHz" : $"{freq:F0} MHz";
+        var ft = new FormattedText(
+            label,
+            System.Globalization.CultureInfo.CurrentCulture,
+            FlowDirection.LeftToRight,
+            new Typeface("Inter"), 10,
+            markerBrush);
+        double labelX = Math.Clamp(x - ft.Width / 2, margin, margin + chartW - ft.Width);
+        ctx.DrawText(ft, new Point(labelX, margin - ft.Height - 2));
     }
 
     private void DrawNetworkShape(DrawingContext ctx, SpectrumEntry entry, double cx, double halfW, double peakY, double baseY)
@@ -134,24 +202,86 @@ public class SpectrumChartControl : Control
 
     private void DrawGrid(DrawingContext ctx, double minFreq, double maxFreq, double margin, double chartW, double chartH)
     {
+        if (ShowFrequency)
+            DrawFrequencyGrid(ctx, minFreq, maxFreq, margin, chartW, chartH);
+        else
+            DrawChannelGrid(ctx, minFreq, maxFreq, margin, chartW, chartH);
+    }
+
+    private void DrawChannelGrid(DrawingContext ctx, double minFreq, double maxFreq, double margin, double chartW, double chartH)
+    {
         double freqRange = maxFreq - minFreq;
-        double step = freqRange < 100 ? 5 : freqRange < 500 ? 20 : 100;
+        if (freqRange <= 0) return;
+
+        var channels = GetChannelList();
+        var gridPen  = new Pen(new SolidColorBrush(Color.FromArgb(35, 180, 180, 180)), 1);
+        var tickPen  = new Pen(Brushes.DimGray, 1);
+
+        // Compute minimum pixel gap to choose label density
+        double minGapPx = chartW;
+        for (int i = 1; i < channels.Count; i++)
+        {
+            double dx = (channels[i].freq - channels[i - 1].freq) / freqRange * chartW;
+            if (dx < minGapPx) minGapPx = dx;
+        }
+        int labelEvery = minGapPx < 14 ? 4 : minGapPx < 22 ? 2 : 1;
+
+        for (int i = 0; i < channels.Count; i++)
+        {
+            var (ch, freq) = channels[i];
+            double x = margin + (freq - minFreq) / freqRange * chartW;
+            if (x < margin - 1 || x > margin + chartW + 1) continue;
+
+            ctx.DrawLine(gridPen, new Point(x, margin), new Point(x, margin + chartH));
+            ctx.DrawLine(tickPen, new Point(x, margin + chartH), new Point(x, margin + chartH + 4));
+
+            if (i % labelEvery == 0)
+            {
+                var ft = new FormattedText(
+                    ch.ToString(),
+                    System.Globalization.CultureInfo.CurrentCulture,
+                    FlowDirection.LeftToRight,
+                    new Typeface("Inter"), 9, Brushes.Gray);
+                ctx.DrawText(ft, new Point(x - ft.Width / 2, margin + chartH + 6));
+            }
+        }
+    }
+
+    private static void DrawFrequencyGrid(DrawingContext ctx, double minFreq, double maxFreq, double margin, double chartW, double chartH)
+    {
+        double freqRange = maxFreq - minFreq;
+        if (freqRange <= 0) return;
+
+        double step  = freqRange < 100 ? 5 : freqRange < 500 ? 20 : 100;
         double start = Math.Ceiling(minFreq / step) * step;
 
-        var pen = new Pen(new SolidColorBrush(Color.FromArgb(40, 180, 180, 180)), 1);
+        var gridPen = new Pen(new SolidColorBrush(Color.FromArgb(35, 180, 180, 180)), 1);
+        var tickPen = new Pen(Brushes.DimGray, 1);
+
         for (double f = start; f <= maxFreq; f += step)
         {
             double x = margin + (f - minFreq) / freqRange * chartW;
-            ctx.DrawLine(pen, new Point(x, margin), new Point(x, margin + chartH));
+            ctx.DrawLine(gridPen, new Point(x, margin), new Point(x, margin + chartH));
+            ctx.DrawLine(tickPen, new Point(x, margin + chartH), new Point(x, margin + chartH + 4));
 
             var ft = new FormattedText(
                 $"{f:F0}",
                 System.Globalization.CultureInfo.CurrentCulture,
                 FlowDirection.LeftToRight,
                 new Typeface("Inter"), 9, Brushes.Gray);
-            ctx.DrawText(ft, new Point(x - ft.Width / 2, margin + chartH + 4));
+            ctx.DrawText(ft, new Point(x - ft.Width / 2, margin + chartH + 6));
         }
     }
+
+    private List<(int ch, double freq)> GetChannelList() => Band switch
+    {
+        "5 GHz" => new[] { 36, 40, 44, 48, 52, 56, 60, 64, 100, 104, 108, 112, 116, 120, 124, 128, 132, 136, 140, 144, 149, 153, 157, 161, 165 }
+                   .Select(ch => (ch, 5000.0 + ch * 5)).ToList(),
+        "6 GHz" => Enumerable.Range(0, 24).Select(i => 1 + i * 4)
+                   .Select(ch => (ch, 5950.0 + ch * 5)).ToList(),
+        _       => Enumerable.Range(1, 13).Select(ch => (ch, 2407.0 + ch * 5))
+                   .Append((14, 2484.0)).ToList()
+    };
 
     private void DrawDbmScale(DrawingContext ctx, double x, double margin, double chartH, double dbmMin, double dbmMax)
     {

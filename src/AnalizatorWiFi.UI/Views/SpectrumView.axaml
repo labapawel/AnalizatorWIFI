@@ -2,29 +2,83 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:controls="using:AnalizatorWiFi.UI.Controls"
              xmlns:loc="using:AnalizatorWiFi.UI.Services"
+             xmlns:aconv="using:Avalonia.Data.Converters"
              x:Class="AnalizatorWiFi.UI.Views.SpectrumView">
 
-    <Grid RowDefinitions="Auto,*">
+    <Grid RowDefinitions="Auto,*,Auto">
 
-        <!-- Band selector -->
+        <!-- Toolbar -->
         <Border Grid.Row="0" Padding="8,6" BorderThickness="0,0,0,1"
                 BorderBrush="{DynamicResource SystemBaseMediumLowColor}">
-            <StackPanel Orientation="Horizontal" Spacing="8">
-                <TextBlock Text="{Binding [Spectrum.Band], Source={x:Static loc:LocalizationService.Instance}}"
-                           VerticalAlignment="Center"/>
-                <ComboBox ItemsSource="{Binding Bands}"
-                          SelectedItem="{Binding SelectedBand}"
-                          Width="100"/>
-                <TextBlock Text="{Binding [Spectrum.Hint], Source={x:Static loc:LocalizationService.Instance}}"
-                           VerticalAlignment="Center"
-                           Foreground="{DynamicResource SystemBaseMediumColor}"/>
-            </StackPanel>
+            <DockPanel>
+
+                <!-- Right: axis toggle + channel selector -->
+                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" Spacing="8">
+
+                    <!-- Ch / MHz toggle -->
+                    <Border BorderThickness="1"
+                            BorderBrush="{DynamicResource SystemBaseMediumLowColor}"
+                            CornerRadius="4" Padding="1">
+                        <StackPanel Orientation="Horizontal" Spacing="1">
+                            <RadioButton Content="{Binding [Spectrum.AxisChannel], Source={x:Static loc:LocalizationService.Instance}}"
+                                         IsChecked="{Binding ShowFrequency, Converter={x:Static aconv:BoolConverters.Not}}"
+                                         GroupName="xaxis"
+                                         Padding="8,3" VerticalContentAlignment="Center"/>
+                            <RadioButton Content="{Binding [Spectrum.AxisMHz], Source={x:Static loc:LocalizationService.Instance}}"
+                                         IsChecked="{Binding ShowFrequency}"
+                                         GroupName="xaxis"
+                                         Padding="8,3" VerticalContentAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Channel picker (visible in channel mode) -->
+                    <TextBlock Text="{Binding [Spectrum.Channel], Source={x:Static loc:LocalizationService.Instance}}"
+                               VerticalAlignment="Center"
+                               IsVisible="{Binding ShowFrequency, Converter={x:Static aconv:BoolConverters.Not}}"/>
+                    <ComboBox ItemsSource="{Binding ChannelOptions}"
+                              SelectedItem="{Binding SelectedChannel}"
+                              PlaceholderText="–"
+                              Width="70"
+                              IsVisible="{Binding ShowFrequency, Converter={x:Static aconv:BoolConverters.Not}}"/>
+                    <Button Content="✕"
+                            Command="{Binding ClearMarkerCommand}"
+                            IsVisible="{Binding HasSelection}"
+                            Padding="4,2"
+                            ToolTip.Tip="{Binding [Spectrum.ClearMarker], Source={x:Static loc:LocalizationService.Instance}}"/>
+                </StackPanel>
+
+                <!-- Left: band selector + hint -->
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <TextBlock Text="{Binding [Spectrum.Band], Source={x:Static loc:LocalizationService.Instance}}"
+                               VerticalAlignment="Center"/>
+                    <ComboBox ItemsSource="{Binding Bands}"
+                              SelectedItem="{Binding SelectedBand}"
+                              Width="100"/>
+                    <TextBlock Text="{Binding [Spectrum.Hint], Source={x:Static loc:LocalizationService.Instance}}"
+                               VerticalAlignment="Center"
+                               Foreground="{DynamicResource SystemBaseMediumColor}"/>
+                </StackPanel>
+
+            </DockPanel>
         </Border>
 
         <!-- Spectrum chart -->
         <controls:SpectrumChartControl Grid.Row="1"
                                        Entries="{Binding CurrentEntries}"
                                        Band="{Binding SelectedBand}"
+                                       SelectedFrequencyMhz="{Binding SelectedFrequencyMhz, Mode=TwoWay}"
+                                       ShowFrequency="{Binding ShowFrequency}"
+                                       Cursor="Cross"
                                        Margin="8"/>
+
+        <!-- Selection info bar -->
+        <Border Grid.Row="2" Padding="8,4" BorderThickness="0,1,0,0"
+                BorderBrush="{DynamicResource SystemBaseMediumLowColor}"
+                IsVisible="{Binding HasSelection}">
+            <TextBlock Text="{Binding SelectionInfo}"
+                       Foreground="{DynamicResource SystemAccentColor}"
+                       FontSize="12"/>
+        </Border>
+
     </Grid>
 </UserControl>

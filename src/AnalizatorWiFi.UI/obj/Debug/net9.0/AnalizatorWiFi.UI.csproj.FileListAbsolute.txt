@@ -153,3 +153,4 @@ C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.U
 C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.UI\bin\Debug\net9.0\lang\de.json
 C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.UI\bin\Debug\net9.0\lang\en.json
 C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.UI\bin\Debug\net9.0\lang\pl.json
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.UI\obj\Debug\net9.0\AnalizatorWiFi.UI.sourcelink.json

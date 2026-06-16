@@ -13,3 +13,4 @@ C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.P
 C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Windows\obj\Debug\net9.0\refint\AnalizatorWiFi.Platform.Windows.dll
 C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Windows\obj\Debug\net9.0\AnalizatorWiFi.Platform.Windows.pdb
 C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Windows\obj\Debug\net9.0\ref\AnalizatorWiFi.Platform.Windows.dll
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Platform.Windows\obj\Debug\net9.0\AnalizatorWiFi.Platform.Windows.sourcelink.json

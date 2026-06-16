@@ -12,6 +12,10 @@ namespace AnalizatorWiFi.Platform.Windows;
 
 public sealed partial class WindowsWifiConnector : IWifiConnector
 {
+    private string _selectedAdapter = string.Empty;
+
+    public void SetAdapter(string adapterName) => _selectedAdapter = adapterName;
+
     // netsh wlan show interfaces — SSID/BSSID labels are never localized
     [GeneratedRegex(@"^\s+SSID\s*:\s*(.+)$",                                                    RegexOptions.IgnoreCase)] private static partial Regex SsidLine();
     [GeneratedRegex(@"^\s+BSSID\s*:\s*([0-9a-f]{2}[:\-][0-9a-f]{2}[:\-][0-9a-f]{2}[:\-][0-9a-f]{2}[:\-][0-9a-f]{2}[:\-][0-9a-f]{2})", RegexOptions.IgnoreCase)] private static partial Regex BssidLine();
@@ -28,7 +32,7 @@ public sealed partial class WindowsWifiConnector : IWifiConnector
             try
             {
                 using var handle = new WlanHandle();
-                var iface = GetFirstInterface(handle);
+                var iface = GetInterface(handle);
                 if (iface.InterfaceGuid == Guid.Empty) return false;
 
                 string profileXml = BuildProfileXml(ssid, password);
@@ -55,7 +59,7 @@ public sealed partial class WindowsWifiConnector : IWifiConnector
         await Task.Run(() =>
         {
             using var handle = new WlanHandle();
-            var iface = GetFirstInterface(handle);
+            var iface = GetInterface(handle);
             if (iface.InterfaceGuid == Guid.Empty) return;
             var guid = iface.InterfaceGuid;
             NativeMethods.WlanDisconnect(handle.Handle, ref guid, IntPtr.Zero);
@@ -68,7 +72,10 @@ public sealed partial class WindowsWifiConnector : IWifiConnector
         {
             try
             {
-                var psi = new ProcessStartInfo("netsh", "wlan show interfaces")
+                string args = string.IsNullOrEmpty(_selectedAdapter)
+                    ? "wlan show interfaces"
+                    : $"wlan show interfaces interface=\"{_selectedAdapter}\"";
+                var psi = new ProcessStartInfo("netsh", args)
                 {
                     RedirectStandardOutput = true,
                     UseShellExecute = false,
@@ -88,7 +95,7 @@ public sealed partial class WindowsWifiConnector : IWifiConnector
         return await Task.Run(() =>
         {
             using var handle = new WlanHandle();
-            var iface = GetFirstInterface(handle);
+            var iface = GetInterface(handle);
             return iface.isState == WlanInterfaceState.Connected;
         }, ct);
     }
@@ -156,7 +163,7 @@ public sealed partial class WindowsWifiConnector : IWifiConnector
         return new ConnectionInfo
         {
             Ssid = ssid ?? string.Empty,
-            Bssid = bssid,
+            Bssid = bssid ?? string.Empty,
             IpAddress = ip,
             SubnetMask = mask,
             Gateway = gw,
@@ -192,7 +199,7 @@ public sealed partial class WindowsWifiConnector : IWifiConnector
         return (string.Empty, string.Empty, string.Empty, []);
     }
 
-    private static WlanInterfaceInfo GetFirstInterface(WlanHandle handle)
+    private WlanInterfaceInfo GetInterface(WlanHandle handle)
     {
         uint result = NativeMethods.WlanEnumInterfaces(handle.Handle, IntPtr.Zero, out IntPtr listPtr);
         if (result != NativeMethods.ERROR_SUCCESS) return default;
@@ -200,6 +207,21 @@ public sealed partial class WindowsWifiConnector : IWifiConnector
         {
             uint count = (uint)Marshal.ReadInt32(listPtr);
             if (count == 0) return default;
+
+            int sz = Marshal.SizeOf<WlanInterfaceInfo>();
+            IntPtr ip = listPtr + 8;
+
+            if (!string.IsNullOrEmpty(_selectedAdapter))
+            {
+                for (int i = 0; i < count; i++)
+                {
+                    var info = Marshal.PtrToStructure<WlanInterfaceInfo>(ip);
+                    if (string.Equals(info.strInterfaceDescription, _selectedAdapter, StringComparison.OrdinalIgnoreCase))
+                        return info;
+                    ip += sz;
+                }
+            }
+
             return Marshal.PtrToStructure<WlanInterfaceInfo>(listPtr + 8);
         }
         finally { NativeMethods.WlanFreeMemory(listPtr); }

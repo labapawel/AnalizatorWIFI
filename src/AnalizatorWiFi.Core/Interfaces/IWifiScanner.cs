@@ -6,4 +6,5 @@ public interface IWifiScanner
 {
     Task<ScanResult> ScanAsync(CancellationToken ct = default);
     Task<IReadOnlyList<string>> GetAdaptersAsync(CancellationToken ct = default);
+    void SetAdapter(string adapterName);
 }

@@ -6,6 +6,7 @@ Wieloplatformowa aplikacja desktopowa do analizy sieci WiFi i połączeń siecio
 
 Licencja: MIT
 Strona: [ebtech.pl](https://www.ebtech.pl)
+Instalator windows: [Setup](https://analizatorwifi.ebtech.pl/soft/AnalizatorWiFi-win-Setup.exe)
 
 ## Funkcje
 
@@ -136,5 +137,4 @@ dotnet publish src/AnalizatorWiFi.UI/AnalizatorWiFi.UI.csproj \
 |---|---|---|
 | Avalonia UI | 12.0.4 | Wieloplatformowy interfejs graficzny |
 | CommunityToolkit.Mvvm | 8.4.1 | MVVM, komendy, source generators |
-| Microsoft.Extensions.Hosting | 9.0.0 | DI, konfiguracja |
-| SQLite (via ADO.NET) | — | Baza historii skanowań |
+| Microsoft.Extensions.Hosting | 

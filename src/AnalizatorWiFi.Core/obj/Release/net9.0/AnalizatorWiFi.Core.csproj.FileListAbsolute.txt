@@ -10,3 +10,4 @@ C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.C
 C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Core\obj\Release\net9.0\refint\AnalizatorWiFi.Core.dll
 C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Core\obj\Release\net9.0\AnalizatorWiFi.Core.pdb
 C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Core\obj\Release\net9.0\ref\AnalizatorWiFi.Core.dll
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.Core\obj\Release\net9.0\AnalizatorWiFi.Core.sourcelink.json

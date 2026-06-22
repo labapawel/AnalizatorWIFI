@@ -8,7 +8,7 @@
         Width="1100" Height="700"
         MinWidth="900" MinHeight="600">
 
-    <Grid RowDefinitions="Auto,*">
+    <Grid RowDefinitions="Auto,Auto,*">
 
         <!-- Header bar -->
         <Border Grid.Row="0" Background="{DynamicResource SystemAccentColor}" Padding="12,8">
@@ -17,8 +17,54 @@
                        Foreground="White" VerticalAlignment="Center"/>
         </Border>
 
+        <!-- Update banner -->
+        <Border Grid.Row="1"
+                Background="#E69B17"
+                Padding="12,7"
+                IsVisible="{Binding IsUpdateAvailable}">
+            <Grid ColumnDefinitions="Auto,*,Auto,Auto" RowDefinitions="Auto,Auto">
+
+                <!-- Icon + text -->
+                <TextBlock Grid.Row="0" Grid.Column="0"
+                           Text="&#x25B2;" FontSize="13"
+                           Foreground="White" Opacity="0.85"
+                           VerticalAlignment="Center" Margin="0,0,8,0"/>
+                <TextBlock Grid.Row="0" Grid.Column="1"
+                           Text="{Binding UpdateBannerText}"
+                           Foreground="White" FontWeight="SemiBold"
+                           VerticalAlignment="Center"/>
+
+                <!-- Install button -->
+                <Button Grid.Row="0" Grid.Column="2"
+                        Content="{Binding [Update.Banner.Install], Source={x:Static loc:LocalizationService.Instance}}"
+                        Command="{Binding InstallUpdateCommand}"
+                        IsEnabled="{Binding !IsInstallingUpdate}"
+                        Padding="12,4" Margin="8,0,4,0"
+                        Background="White" Foreground="#E69B17"
+                        FontWeight="SemiBold"/>
+
+                <!-- Dismiss button -->
+                <Button Grid.Row="0" Grid.Column="3"
+                        Content="&#x2715;"
+                        Command="{Binding DismissUpdateBannerCommand}"
+                        IsVisible="{Binding !IsInstallingUpdate}"
+                        Padding="8,4"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Foreground="White"/>
+
+                <!-- Download progress bar -->
+                <ProgressBar Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4"
+                             Value="{Binding DownloadProgress}" Maximum="100"
+                             IsVisible="{Binding IsInstallingUpdate}"
+                             Height="3" Margin="0,4,0,0"
+                             Background="Transparent"
+                             Foreground="White"/>
+            </Grid>
+        </Border>
+
         <!-- Main tab control -->
-        <TabControl Grid.Row="1"
+        <TabControl Grid.Row="2"
                     SelectedIndex="{Binding SelectedTabIndex}"
                     Margin="0,0,0,22">
 
@@ -82,8 +128,9 @@
             </TabItem>
 
         </TabControl>
+
         <!-- Footer -->
-        <Border Grid.Row="1" VerticalAlignment="Bottom" Height="22"
+        <Border Grid.Row="2" VerticalAlignment="Bottom" Height="22"
                 Background="{DynamicResource SystemBaseLowColor}"
                 BorderThickness="0,1,0,0"
                 BorderBrush="{DynamicResource SystemBaseMediumLowColor}">

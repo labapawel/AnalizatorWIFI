@@ -158,5 +158,24 @@
   "Settings.Save":                "Einstellungen speichern",
   "Settings.Status.Saved":        "Einstellungen gespeichert",
 
+  "Settings.UpdateSection":             "Aktualisierungen",
+  "Settings.CurrentVersion":            "Aktuelle Version:",
+  "Settings.CheckForUpdate":            "Auf Updates prüfen",
+  "Settings.InstallUpdate":             "Installieren & Neustart",
+  "Settings.Update.Checking":           "Auf Aktualisierungen prüfen...",
+  "Settings.Update.Available":          "Update verfügbar: v{0}",
+  "Settings.Update.UpToDate":           "Anwendung ist aktuell",
+  "Settings.Update.Error":              "Fehler: {0}",
+  "Settings.Update.Downloading":        "Update wird heruntergeladen...",
+  "Settings.Update.DownloadProgress":   "Herunterladen: {0}%",
+  "Settings.Update.Restarting":         "Anwendung wird neu gestartet...",
+
+  "Update.Banner.Available":        "Neue Version verfugbar: v{0}",
+  "Update.Banner.Install":          "Installieren & Neustart",
+  "Update.Banner.Downloading":      "Update wird heruntergeladen...",
+  "Update.Banner.DownloadProgress": "Herunterladen: {0}%",
+  "Update.Banner.Restarting":       "Neustart...",
+  "Update.Banner.Error":            "Update-Fehler: {0}",
+
   "Geo.Local": "Lokal"
 }

@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 using AnalizatorWiFi.Core.Interfaces;
 using AnalizatorWiFi.Core.Models;
 using AnalizatorWiFi.UI.Services;
+using Velopack;
 
 namespace AnalizatorWiFi.UI.ViewModels;
 
@@ -12,6 +13,7 @@ public partial class SettingsViewModel : ViewModelBase
     private readonly ISettingsService _settingsService;
     private readonly IWifiScanner _scanner;
     private readonly IWifiConnector _connector;
+    private readonly UpdateService _updateService;
 
     [ObservableProperty] private AppTheme _theme;
     [ObservableProperty] private ScanMode _scanMode;
@@ -24,6 +26,14 @@ public partial class SettingsViewModel : ViewModelBase
     [ObservableProperty] private ObservableCollection<string> _adapters = [];
     [ObservableProperty] private string _selectedAdapter = string.Empty;
     [ObservableProperty] private string _statusMessage = string.Empty;
+
+    // Update
+    [ObservableProperty] private string _updateStatus = string.Empty;
+    [ObservableProperty] private bool _isUpdateAvailable;
+    [ObservableProperty] private bool _isCheckingUpdate;
+    [ObservableProperty] private int _downloadProgress;
+
+    public string AppVersion => _updateService.CurrentVersion;
 
     // iperf server list
     [ObservableProperty] private ObservableCollection<IperfServer> _iperfServers = [];
@@ -42,11 +52,12 @@ public partial class SettingsViewModel : ViewModelBase
     public IReadOnlyList<LanguageInfo> AvailableLanguages =>
         LocalizationService.Instance.Available;
 
-    public SettingsViewModel(ISettingsService settingsService, IWifiScanner scanner, IWifiConnector connector)
+    public SettingsViewModel(ISettingsService settingsService, IWifiScanner scanner, IWifiConnector connector, UpdateService updateService)
     {
         _settingsService = settingsService;
         _scanner = scanner;
         _connector = connector;
+        _updateService = updateService;
         LoadFromSettings();
     }
 
@@ -122,5 +133,56 @@ public partial class SettingsViewModel : ViewModelBase
         var adapters = await _scanner.GetAdaptersAsync();
         Adapters.Clear();
         foreach (var a in adapters) Adapters.Add(a);
+    }
+
+    [RelayCommand]
+    private async Task CheckForUpdateAsync()
+    {
+        IsCheckingUpdate = true;
+        IsUpdateAvailable = false;
+        UpdateStatus = L["Settings.Update.Checking"];
+        try
+        {
+            bool found = await _updateService.CheckForUpdatesAsync();
+            if (found)
+            {
+                IsUpdateAvailable = true;
+                UpdateStatus = string.Format(L["Settings.Update.Available"], _updateService.PendingVersion);
+            }
+            else
+            {
+                UpdateStatus = L["Settings.Update.UpToDate"];
+            }
+        }
+        catch (Exception ex)
+        {
+            UpdateStatus = string.Format(L["Settings.Update.Error"], ex.Message);
+        }
+        finally
+        {
+            IsCheckingUpdate = false;
+        }
+    }
+
+    [RelayCommand]
+    private async Task InstallUpdateAsync()
+    {
+        if (!_updateService.HasPendingUpdate) return;
+        try
+        {
+            DownloadProgress = 0;
+            UpdateStatus = L["Settings.Update.Downloading"];
+            await _updateService.DownloadUpdateAsync(p =>
+            {
+                DownloadProgress = p;
+                UpdateStatus = string.Format(L["Settings.Update.DownloadProgress"], p);
+            });
+            UpdateStatus = L["Settings.Update.Restarting"];
+            _updateService.ApplyAndRestart();
+        }
+        catch (Exception ex)
+        {
+            UpdateStatus = string.Format(L["Settings.Update.Error"], ex.Message);
+        }
     }
 }

@@ -80,8 +80,12 @@ Strona: [ebtech.pl](https://www.ebtech.pl)
 
 - [.NET 9 SDK](https://dotnet.microsoft.com/download/dotnet/9.0)
 - **Windows**: brak dodatkowych wymagań (korzysta z natywnego WLAN API)
-- **Linux**: `iw` lub `iwlist` i `nmcli` — wymagane do skanowania i zarządzania połączeniami
-- **Test prędkości**: opcjonalnie `iperf3` zainstalowany w systemie
+- **Linux**: zainstaluj wymagane pakiety systemowe skryptem:
+  ```bash
+  sudo ./install-deps-linux.sh
+  ```
+  Skrypt obsługuje Debian/Ubuntu, Fedorę/RHEL i Arch Linuksa. Instaluje `network-manager` (nmcli), `iperf3`, biblioteki X11/OpenGL/Wayland wymagane przez Avalonia UI oraz włącza usługę NetworkManager.
+- **Test prędkości**: opcjonalnie `iperf3` zainstalowany w systemie (instalowany przez powyższy skrypt)
 
 ## Struktura projektu
 

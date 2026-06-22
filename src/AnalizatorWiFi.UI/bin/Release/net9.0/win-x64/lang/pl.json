@@ -29,6 +29,7 @@
   "Networks.Scan":         "Skanuj",
   "Networks.Continuous":   "▶ Ciągłe",
   "Networks.Stop":         "⏹ Stop",
+  "Networks.Adapter":      "Interfejs:",
   "Networks.Band":         "Pasmo:",
   "Networks.Connect":      "Połącz",
   "Networks.Col.SSID":     "SSID",
@@ -44,8 +45,14 @@
   "Networks.Col.Vendor":   "Producent",
   "Networks.Col.BSSID":    "BSSID",
 
-  "Spectrum.Band": "Pasmo:",
-  "Spectrum.Hint": "Wykres pokazuje nakładanie się kanałów WiFi",
+  "Spectrum.Band":        "Pasmo:",
+  "Spectrum.AxisChannel": "Kanały",
+  "Spectrum.AxisMHz":    "MHz",
+  "Spectrum.Channel":    "Kanał:",
+  "Spectrum.Ch":         "Kanał",
+  "Spectrum.Networks":   "sieci",
+  "Spectrum.ClearMarker": "Usuń marker",
+  "Spectrum.Hint":       "Wykres pokazuje nakładanie się kanałów WiFi · Kliknij, aby ustawić marker",
 
   "Connection.ActiveSection":    "Aktywne połączenie",
   "Connection.Refresh":          "Odśwież",
@@ -150,6 +157,25 @@
   "Settings.Threshold":           "Próg sygnału (dBm):",
   "Settings.Save":                "Zapisz ustawienia",
   "Settings.Status.Saved":        "Zapisano ustawienia",
+
+  "Settings.UpdateSection":             "Aktualizacje",
+  "Settings.CurrentVersion":            "Aktualna wersja:",
+  "Settings.CheckForUpdate":            "Sprawdź aktualizacje",
+  "Settings.InstallUpdate":             "Zainstaluj i uruchom ponownie",
+  "Settings.Update.Checking":           "Sprawdzanie aktualizacji...",
+  "Settings.Update.Available":          "Dostępna aktualizacja: v{0}",
+  "Settings.Update.UpToDate":           "Aplikacja jest aktualna",
+  "Settings.Update.Error":              "Błąd: {0}",
+  "Settings.Update.Downloading":        "Pobieranie aktualizacji...",
+  "Settings.Update.DownloadProgress":   "Pobieranie: {0}%",
+  "Settings.Update.Restarting":         "Restartowanie aplikacji...",
+
+  "Update.Banner.Available":       "Dostepna nowa wersja: v{0}",
+  "Update.Banner.Install":         "Zainstaluj i uruchom ponownie",
+  "Update.Banner.Downloading":     "Pobieranie aktualizacji...",
+  "Update.Banner.DownloadProgress": "Pobieranie: {0}%",
+  "Update.Banner.Restarting":      "Restartowanie...",
+  "Update.Banner.Error":           "Blad aktualizacji: {0}",
 
   "Geo.Local": "Lokalna"
 }

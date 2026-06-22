@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v9.0": {
-      "AnalizatorWiFi.Core/1.0.0": {
+      "AnalizatorWiFi.Core/1.0.2": {
         "dependencies": {
           "Microsoft.Data.Sqlite": "10.0.9",
           "System.Reactive": "6.1.0"
@@ -194,7 +194,7 @@
     }
   },
   "libraries": {
-    "AnalizatorWiFi.Core/1.0.0": {
+    "AnalizatorWiFi.Core/1.0.2": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

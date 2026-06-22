@@ -41,6 +41,9 @@ internal static class ServiceLocator
             return new SqliteHistoryRepository(s.Current.HistoryFilePath);
         });
 
+        // Auto-update
+        services.AddSingleton<UpdateService>();
+
         // Speed tester
         services.AddSingleton<ISpeedTester, IperfSpeedTester>();
 

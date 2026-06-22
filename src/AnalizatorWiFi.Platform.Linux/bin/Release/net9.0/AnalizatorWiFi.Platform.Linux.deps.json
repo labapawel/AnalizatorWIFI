@@ -6,9 +6,9 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v9.0": {
-      "AnalizatorWiFi.Platform.Linux/1.0.0": {
+      "AnalizatorWiFi.Platform.Linux/1.0.2": {
         "dependencies": {
-          "AnalizatorWiFi.Core": "1.0.0"
+          "AnalizatorWiFi.Core": "1.0.2"
         },
         "runtime": {
           "AnalizatorWiFi.Platform.Linux.dll": {}
@@ -190,22 +190,22 @@
           }
         }
       },
-      "AnalizatorWiFi.Core/1.0.0": {
+      "AnalizatorWiFi.Core/1.0.2": {
         "dependencies": {
           "Microsoft.Data.Sqlite": "10.0.9",
           "System.Reactive": "6.1.0"
         },
         "runtime": {
           "AnalizatorWiFi.Core.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
+            "assemblyVersion": "1.0.2.0",
+            "fileVersion": "1.0.2.0"
           }
         }
       }
     }
   },
   "libraries": {
-    "AnalizatorWiFi.Platform.Linux/1.0.0": {
+    "AnalizatorWiFi.Platform.Linux/1.0.2": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -259,7 +259,7 @@
       "path": "system.reactive/6.1.0",
       "hashPath": "system.reactive.6.1.0.nupkg.sha512"
     },
-    "AnalizatorWiFi.Core/1.0.0": {
+    "AnalizatorWiFi.Core/1.0.2": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

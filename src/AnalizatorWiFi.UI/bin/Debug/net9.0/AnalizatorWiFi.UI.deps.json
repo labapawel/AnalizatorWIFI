@@ -17,7 +17,8 @@
           "Avalonia.Themes.Fluent": "12.0.4",
           "CommunityToolkit.Mvvm": "8.4.1",
           "Microsoft.Extensions.DependencyInjection": "9.0.0",
-          "Microsoft.Extensions.Hosting": "9.0.0"
+          "Microsoft.Extensions.Hosting": "9.0.0",
+          "Velopack": "0.0.942"
         },
         "runtime": {
           "AnalizatorWiFi.UI.dll": {}
@@ -746,6 +747,14 @@
           }
         }
       },
+      "NuGet.Versioning/6.12.1": {
+        "runtime": {
+          "lib/netstandard2.0/NuGet.Versioning.dll": {
+            "assemblyVersion": "6.12.1.1",
+            "fileVersion": "6.12.1.1"
+          }
+        }
+      },
       "SkiaSharp/3.119.4": {
         "dependencies": {
           "SkiaSharp.NativeAssets.Win32": "3.119.4",
@@ -1055,6 +1064,18 @@
           "lib/net9.0/Tmds.DBus.Protocol.dll": {
             "assemblyVersion": "0.92.0.0",
             "fileVersion": "0.92.0.0"
+          }
+        }
+      },
+      "Velopack/0.0.942": {
+        "dependencies": {
+          "Microsoft.Extensions.Logging.Abstractions": "9.0.0",
+          "NuGet.Versioning": "6.12.1"
+        },
+        "runtime": {
+          "lib/net8.0/Velopack.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.942.40977"
           }
         }
       },
@@ -1436,6 +1457,13 @@
       "path": "microsoft.extensions.primitives/9.0.0",
       "hashPath": "microsoft.extensions.primitives.9.0.0.nupkg.sha512"
     },
+    "NuGet.Versioning/6.12.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-fJ6rFYANDnohFsdpaY79FvrJxI6murmoOxXz6nZlf819F48+IBKMnAIg3oIBRtZq5y498ObMtKnro5IitvizUg==",
+      "path": "nuget.versioning/6.12.1",
+      "hashPath": "nuget.versioning.6.12.1.nupkg.sha512"
+    },
     "SkiaSharp/3.119.4": {
       "type": "package",
       "serviceable": true,
@@ -1512,6 +1540,13 @@
       "sha512": "sha512-h7IMakm0PF2jxiagoysoAjrzzLQ0UBdnSXQL5kb17YW0Fvyo12Tg96A99QkzwktWRrd7H+Uw9EzjasNLUfGYlA==",
       "path": "tmds.dbus.protocol/0.92.0",
       "hashPath": "tmds.dbus.protocol.0.92.0.nupkg.sha512"
+    },
+    "Velopack/0.0.942": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-reyKfQK/d4WeFHjd9gi1tsWFh9X5JGGQ+PkvKFd9jKx5HocrFYF0bj1K8PgIk2GZezoadapFT36Fvv8/gCD5rA==",
+      "path": "velopack/0.0.942",
+      "hashPath": "velopack.0.0.942.nupkg.sha512"
     },
     "AnalizatorWiFi.Core/1.0.0": {
       "type": "project",

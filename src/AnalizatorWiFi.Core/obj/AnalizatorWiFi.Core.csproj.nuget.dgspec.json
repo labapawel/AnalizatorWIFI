@@ -5,7 +5,7 @@
   },
   "projects": {
     "C:\\Users\\labap\\SynologyDrive\\Projekty\\MojeC#\\AnalizatorWiFi\\src\\AnalizatorWiFi.Core\\AnalizatorWiFi.Core.csproj": {
-      "version": "1.0.0",
+      "version": "1.0.2",
       "restore": {
         "projectUniqueName": "C:\\Users\\labap\\SynologyDrive\\Projekty\\MojeC#\\AnalizatorWiFi\\src\\AnalizatorWiFi.Core\\AnalizatorWiFi.Core.csproj",
         "projectName": "AnalizatorWiFi.Core",
@@ -77,11 +77,27 @@
               "version": "[9.0.13, 9.0.13]"
             },
             {
+              "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
+              "version": "[9.0.13, 9.0.13]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Crossgen2.win-x64",
+              "version": "[9.0.13, 9.0.13]"
+            },
+            {
               "name": "Microsoft.NETCore.App.Ref",
               "version": "[9.0.13, 9.0.13]"
             },
             {
+              "name": "Microsoft.NETCore.App.Runtime.win-x64",
+              "version": "[9.0.13, 9.0.13]"
+            },
+            {
               "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[9.0.13, 9.0.13]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
               "version": "[9.0.13, 9.0.13]"
             }
           ],
@@ -91,6 +107,11 @@
             }
           },
           "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "win-x64": {
+          "#import": []
         }
       }
     }

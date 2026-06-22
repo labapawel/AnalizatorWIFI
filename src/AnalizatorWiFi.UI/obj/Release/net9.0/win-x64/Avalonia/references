@@ -62,6 +62,7 @@ C:\Users\labap\.nuget\packages\microsoft.netcore.app.ref\9.0.13\ref\net9.0\Micro
 C:\Users\labap\.nuget\packages\microsoft.netcore.app.ref\9.0.13\ref\net9.0\Microsoft.Win32.Registry.dll
 C:\Users\labap\.nuget\packages\microsoft.netcore.app.ref\9.0.13\ref\net9.0\mscorlib.dll
 C:\Users\labap\.nuget\packages\microsoft.netcore.app.ref\9.0.13\ref\net9.0\netstandard.dll
+C:\Users\labap\.nuget\packages\nuget.versioning\6.12.1\lib\netstandard2.0\NuGet.Versioning.dll
 C:\Users\labap\.nuget\packages\skiasharp\3.119.4\ref\net9.0\SkiaSharp.dll
 C:\Users\labap\.nuget\packages\sqlitepclraw.bundle_e_sqlite3\2.1.11\lib\netstandard2.0\SQLitePCLRaw.batteries_v2.dll
 C:\Users\labap\.nuget\packages\sqlitepclraw.core\2.1.11\lib\netstandard2.0\SQLitePCLRaw.core.dll
@@ -225,4 +226,5 @@ C:\Users\labap\.nuget\packages\microsoft.netcore.app.ref\9.0.13\ref\net9.0\Syste
 C:\Users\labap\.nuget\packages\microsoft.netcore.app.ref\9.0.13\ref\net9.0\System.Xml.XPath.dll
 C:\Users\labap\.nuget\packages\microsoft.netcore.app.ref\9.0.13\ref\net9.0\System.Xml.XPath.XDocument.dll
 C:\Users\labap\.nuget\packages\tmds.dbus.protocol\0.92.0\lib\net9.0\Tmds.DBus.Protocol.dll
+C:\Users\labap\.nuget\packages\velopack\0.0.942\lib\net8.0\Velopack.dll
 C:\Users\labap\.nuget\packages\microsoft.netcore.app.ref\9.0.13\ref\net9.0\WindowsBase.dll

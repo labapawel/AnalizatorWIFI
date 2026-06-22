@@ -277,3 +277,6 @@ C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.U
 C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.UI\obj\Release\net9.0\win-x64\AnalizatorWiFi.UI.pdb
 C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.UI\obj\Release\net9.0\win-x64\AnalizatorWiFi.UI.genruntimeconfig.cache
 C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.UI\obj\Release\net9.0\win-x64\ref\AnalizatorWiFi.UI.dll
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.UI\bin\Release\net9.0\win-x64\NuGet.Versioning.dll
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.UI\bin\Release\net9.0\win-x64\Velopack.dll
+C:\Users\labap\SynologyDrive\Projekty\MojeC#\AnalizatorWiFi\src\AnalizatorWiFi.UI\obj\Release\net9.0\win-x64\AnalizatorWiFi.UI.sourcelink.json
